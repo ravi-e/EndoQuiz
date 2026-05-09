@@ -1,0 +1,43 @@
+name: Daily Question Bank Update
+
+on:
+  schedule:
+    # Runs at 00:00 UTC every day
+    - cron: '0 0 * * *'
+  workflow_dispatch: # Allows manual triggering from the GitHub Actions tab
+
+jobs:
+  generate-questions:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          
+      - name: Install dependencies
+        run: pip install google-generativeai
+        
+      - name: Generate new questions
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: python generate.py
+        
+      - name: Commit and Push changes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          
+          # Check if there are any changes to questions.json
+          if git diff --quiet questions.json; then
+            echo "No new questions to commit."
+          else
+            git add questions.json
+            git commit -m "Auto-generated new questions [skip ci]"
+            git push
+            echo "Successfully committed new questions."
+          fi
