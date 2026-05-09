@@ -1,4 +1,4 @@
-const CACHE_NAME = 'endoquiz-v4';
+const CACHE_NAME = 'endoquiz-v17';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',

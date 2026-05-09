@@ -24,12 +24,20 @@
             <p>Test your knowledge for Prometric Exams (DHA, SDLE, QCHP)</p>
             <div class="info-badges">
                 <span class="badge">10 Questions</span>
-                <span class="badge">60s Timer</span>
                 <span class="badge">Randomized Pool</span>
+            </div>
+            
+            <div style="margin: 20px 0; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 0.9rem;">
+                <label class="switch">
+                    <input type="checkbox" id="timer-toggle" checked>
+                    <span class="slider round"></span>
+                </label>
+                <span>60s Timer per Question</span>
             </div>
             <div class="result-actions">
                 <button id="start-btn" class="primary-btn">Start Quiz</button>
                 <button id="view-profile-btn" class="secondary-btn">My Profile</button>
+                <button id="view-db-btn" class="secondary-btn">Database Stats</button>
             </div>
         </div>
 
@@ -62,16 +70,40 @@
             <button id="profile-back-btn" class="secondary-btn mt-10">Back to Home</button>
         </div>
 
+        <!-- Database Stats Screen -->
+        <div id="db-screen" class="screen">
+            <h2>Question Database</h2>
+            <p>A bird's eye view of the current knowledge bank.</p>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="db-total-questions">0</div>
+                    <div class="stat-label">Total Questions</div>
+                </div>
+            </div>
+
+            <div class="knowledge-map">
+                <h3>Domain Distribution</h3>
+                <div id="db-distribution-bars"></div>
+            </div>
+            
+            <button id="db-back-btn" class="secondary-btn mt-10">Back to Home</button>
+        </div>
+
         <!-- Quiz Screen -->
         <div id="quiz-screen" class="screen">
             <div class="quiz-header">
                 <div style="display: flex; gap: 15px; align-items: center;">
-                    <button id="exit-quiz-btn" class="icon-btn" style="color: #f87171; border-color: rgba(248, 113, 113, 0.3); padding: 4px 8px; font-size: 0.8rem;">✕ Exit</button>
+                    <button id="exit-quiz-btn" class="exit-btn-header">✕ Exit</button>
                     <div class="question-tracker">Question <span id="current-q-num">1</span>/10</div>
+                    <span id="tier-badge" class="badge hidden" style="background: rgba(139, 92, 246, 0.2); border-color: rgba(139, 92, 246, 0.4);">Tier 2</span>
                 </div>
-                <div class="timer-container">
-                    <div class="timer-bar" id="timer-bar"></div>
-                    <div class="timer-text" id="timer-text">60s</div>
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <button id="favorite-btn" class="icon-btn" title="Save to favorites">☆</button>
+                    <div class="timer-container">
+                        <div class="timer-bar" id="timer-bar"></div>
+                        <div class="timer-text" id="timer-text">60s</div>
+                    </div>
                 </div>
             </div>
             
@@ -84,11 +116,9 @@
             </div>
             
             <div id="explanation-container" class="explanation-box hidden">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                    <h3 style="margin-bottom: 0;">Explanation</h3>
-                    <button id="favorite-btn" class="icon-btn">☆ Save</button>
-                </div>
-                <p id="explanation-text"></p>
+                <p id="explanation-text" class="hidden"></p>
+                <div id="pearl-container" style="color: #e2e8f0; font-size: 0.95rem; line-height: 1.6; margin-bottom: 15px;"></div>
+                <div id="reference-text" class="reference-label"></div>
             </div>
             
             <button id="next-btn" class="primary-btn hidden">Next Question</button>
@@ -129,11 +159,9 @@
             </div>
             
             <div class="explanation-box review-mode">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                    <h3 style="margin-bottom: 0;">Explanation</h3>
-                    <button id="review-favorite-btn" class="icon-btn">☆ Save</button>
-                </div>
-                <p id="review-explanation-text"></p>
+                <p id="review-explanation-text" class="hidden"></p>
+                <div id="review-pearl-container" style="color: #e2e8f0; font-size: 0.95rem; line-height: 1.6; margin-bottom: 15px;"></div>
+                <div id="review-reference-text" class="reference-label"></div>
             </div>
             
             <div class="result-actions">

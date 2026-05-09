@@ -4,7 +4,8 @@ const DOM = {
         quiz: document.getElementById('quiz-screen'),
         result: document.getElementById('result-screen'),
         review: document.getElementById('review-screen'),
-        profile: document.getElementById('profile-screen')
+        profile: document.getElementById('profile-screen'),
+        db: document.getElementById('db-screen')
     },
     btns: {
         start: document.getElementById('start-btn'),
@@ -19,9 +20,11 @@ const DOM = {
         reviewFavorites: document.getElementById('review-favorites-btn'),
         refreshBank: document.getElementById('refresh-bank-btn'),
         favorite: document.getElementById('favorite-btn'),
-        reviewFavorite: document.getElementById('review-favorite-btn'),
         home: document.getElementById('home-btn'),
-        exitQuiz: document.getElementById('exit-quiz-btn')
+        exitQuiz: document.getElementById('exit-quiz-btn'),
+        timerToggle: document.getElementById('timer-toggle'),
+        viewDB: document.getElementById('view-db-btn'),
+        dbBack: document.getElementById('db-back-btn')
     },
     quiz: {
         qNum: document.getElementById('current-q-num'),
@@ -32,7 +35,10 @@ const DOM = {
         timerText: document.getElementById('timer-text'),
         timerContainer: document.querySelector('.timer-container'),
         explanationContainer: document.getElementById('explanation-container'),
-        explanationText: document.getElementById('explanation-text')
+        explanationText: document.getElementById('explanation-text'),
+        tierBadge: document.getElementById('tier-badge'),
+        pearlContainer: document.getElementById('pearl-container'),
+        referenceText: document.getElementById('reference-text')
     },
     review: {
         qNum: document.getElementById('review-q-num'),
@@ -40,7 +46,9 @@ const DOM = {
         category: document.getElementById('review-category-badge'),
         question: document.getElementById('review-question-text'),
         options: document.getElementById('review-options-container'),
-        explanationText: document.getElementById('review-explanation-text')
+        explanationText: document.getElementById('review-explanation-text'),
+        pearlContainer: document.getElementById('review-pearl-container'),
+        referenceText: document.getElementById('review-reference-text')
     },
     profile: {
         totalSolved: document.getElementById('stat-total-solved'),
@@ -52,6 +60,10 @@ const DOM = {
         score: document.getElementById('final-score'),
         message: document.getElementById('result-message'),
         kMapBars: document.getElementById('knowledge-map-bars')
+    },
+    db: {
+        total: document.getElementById('db-total-questions'),
+        distBars: document.getElementById('db-distribution-bars')
     }
 };
 
@@ -64,6 +76,7 @@ let reviewIndex = 0;
 let timerInterval;
 let timeLeft = 60;
 const TIME_LIMIT = 60;
+let isTimerEnabled = true;
 
 // Persistent Data
 let userStats = JSON.parse(localStorage.getItem('endoStats')) || { totalSolved: 0, totalCorrect: 0, highScore: 0 };
@@ -91,10 +104,10 @@ async function loadQuestions() {
         
         DOM.btns.start.disabled = false;
         DOM.btns.start.textContent = "Start Quiz";
+        updateDBDashboard();
     } catch (error) {
-        console.error("Failed to load questions from web source. Ensure you are running this on a web server.", error);
+        console.error("Failed to load questions from web source.", error);
         DOM.btns.start.textContent = "Error Loading Questions";
-        DOM.btns.start.disabled = true;
     }
 }
 
@@ -108,9 +121,38 @@ function shuffleArray(array) {
     return arr;
 }
 
+function updateDBDashboard() {
+    DOM.db.total.textContent = allQuestions.length;
+    const dist = {};
+    allQuestions.forEach(q => {
+        const cat = q.category || 'General';
+        dist[cat] = (dist[cat] || 0) + 1;
+    });
+    
+    DOM.db.distBars.innerHTML = '';
+    const sortedCats = Object.entries(dist).sort((a, b) => b[1] - a[1]);
+    const maxCount = allQuestions.length > 0 ? Math.max(...Object.values(dist)) : 0;
+    
+    sortedCats.forEach(([cat, count]) => {
+        const percentage = (count / maxCount) * 100;
+        const barHtml = `
+            <div class="k-map-item" style="margin-bottom: 16px; text-align: left; background: rgba(255,255,255,0.03); padding: 12px 16px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
+                <div class="k-map-info" style="margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
+                    <span style="color: #e2e8f0; font-weight: 600; font-size: 0.95rem;">${cat}</span>
+                    <span style="color: #60a5fa; font-weight: 700; background: rgba(59, 130, 246, 0.1); padding: 2px 8px; border-radius: 6px; font-size: 0.85rem;">${count}</span>
+                </div>
+                <div class="k-bar-bg" style="height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden;">
+                    <div class="k-bar-fill" style="width: ${percentage}%; height: 100%; border-radius: 4px; background: linear-gradient(90deg, #3b82f6, #8b5cf6); transition: width 1s ease;"></div>
+                </div>
+            </div>
+        `;
+        DOM.db.distBars.insertAdjacentHTML('beforeend', barHtml);
+    });
+}
+
 function startNewRound() {
     isReviewFavoritesMode = false;
-    // Select 10 random questions
+    isTimerEnabled = DOM.btns.timerToggle.checked;
     const shuffled = shuffleArray(allQuestions);
     currentRoundQuestions = shuffled.slice(0, 10);
     
@@ -138,16 +180,13 @@ function startFavoritesRound() {
 }
 
 function switchScreen(screenName) {
-    Object.values(DOM.screens).forEach(screen => {
-        screen.classList.remove('active');
-    });
+    Object.values(DOM.screens).forEach(screen => screen.classList.remove('active'));
     DOM.screens[screenName].classList.add('active');
 }
 
 function loadQuestion() {
     const q = currentRoundQuestions[currentQuestionIndex];
     
-    // Reset UI
     DOM.quiz.qNum.textContent = currentQuestionIndex + 1;
     DOM.quiz.category.textContent = q.category || 'General';
     DOM.quiz.question.textContent = q.question;
@@ -155,18 +194,39 @@ function loadQuestion() {
     DOM.quiz.explanationContainer.classList.add('hidden');
     DOM.btns.next.classList.add('hidden');
     updateFavoriteUI(q);
+
+    if (q.tier) {
+        DOM.quiz.tierBadge.textContent = `Tier ${q.tier}: ${getTierLabel(q.tier)}`;
+        DOM.quiz.tierBadge.classList.remove('hidden');
+    } else {
+        DOM.quiz.tierBadge.classList.add('hidden');
+    }
     
-    // Create options
     q.options.forEach((optText, index) => {
         const btn = document.createElement('button');
         btn.classList.add('option');
-        btn.textContent = optText;
         btn.dataset.index = index;
+        
+        const mainDiv = document.createElement('div');
+        mainDiv.classList.add('option-main');
+        mainDiv.textContent = optText;
+        btn.appendChild(mainDiv);
+        
+        const reasoningDiv = document.createElement('div');
+        reasoningDiv.classList.add('option-reasoning', 'hidden');
+        btn.appendChild(reasoningDiv);
+        
         btn.addEventListener('click', handleOptionClick);
         DOM.quiz.options.appendChild(btn);
     });
     
-    startTimer();
+    if (isTimerEnabled) {
+        DOM.quiz.timerContainer.style.display = 'block';
+        startTimer();
+    } else {
+        DOM.quiz.timerContainer.style.display = 'none';
+        clearInterval(timerInterval);
+    }
 }
 
 function startTimer() {
@@ -174,14 +234,12 @@ function startTimer() {
     timeLeft = TIME_LIMIT;
     updateTimerUI();
     
-    // Reset bar animation by re-triggering reflow
     DOM.quiz.timerBar.style.width = '100%';
     DOM.quiz.timerContainer.classList.remove('warning');
     
     timerInterval = setInterval(() => {
         timeLeft--;
         updateTimerUI();
-        
         if (timeLeft <= 0) {
             clearInterval(timerInterval);
             handleTimeUp();
@@ -193,15 +251,27 @@ function updateTimerUI() {
     DOM.quiz.timerText.textContent = `${timeLeft}s`;
     const percentage = (timeLeft / TIME_LIMIT) * 100;
     DOM.quiz.timerBar.style.width = `${percentage}%`;
-    
-    if (timeLeft <= 10) {
-        DOM.quiz.timerContainer.classList.add('warning');
-    }
+    if (timeLeft <= 10) DOM.quiz.timerContainer.classList.add('warning');
 }
 
 function showExplanation(q) {
     if (q.explanation) {
-        DOM.quiz.explanationText.innerHTML = q.explanation.replace(/Correct Answer:/g, '<strong>Correct Answer:</strong>').replace(/Why others are wrong:/g, '<br><br><strong>Why others are wrong:</strong>');
+        DOM.quiz.explanationText.innerHTML = ''; // Clear redundant text
+        
+        if (q.clinicalPearl) {
+            DOM.quiz.pearlContainer.innerHTML = `💎 <strong>Clinical Pearl:</strong> ${q.clinicalPearl}`;
+            DOM.quiz.pearlContainer.classList.remove('hidden');
+        } else {
+            DOM.quiz.pearlContainer.classList.add('hidden');
+        }
+        
+        if (q.reference) {
+            DOM.quiz.referenceText.innerHTML = `📚 <strong>Reference:</strong> ${q.reference}`;
+            DOM.quiz.referenceText.classList.remove('hidden');
+        } else {
+            DOM.quiz.referenceText.classList.add('hidden');
+        }
+        
         DOM.quiz.explanationContainer.classList.remove('hidden');
     }
 }
@@ -209,13 +279,10 @@ function showExplanation(q) {
 function updateFavoriteUI(q) {
     const isFav = favorites.some(f => f.question === q.question);
     DOM.btns.favorite.classList.toggle('active', isFav);
-    DOM.btns.reviewFavorite.classList.toggle('active', isFav);
     DOM.btns.favorite.textContent = isFav ? '★ Saved' : '☆ Save';
-    DOM.btns.reviewFavorite.textContent = isFav ? '★ Saved' : '☆ Save';
 }
 
 function toggleFavorite() {
-    // Get current question based on screen
     const q = DOM.screens.quiz.classList.contains('active') ? 
               currentRoundQuestions[currentQuestionIndex] : 
               wrongQuestions[reviewIndex].questionData;
@@ -228,25 +295,37 @@ function toggleFavorite() {
     }
     saveStats();
     updateFavoriteUI(q);
-    
-    // Update profile count if active
     DOM.profile.favCount.textContent = favorites.length;
     DOM.btns.reviewFavorites.disabled = favorites.length === 0;
 }
 
 function handleOptionClick(e) {
-    clearInterval(timerInterval); // Stop timer
-    const selectedBtn = e.target;
+    clearInterval(timerInterval);
+    const selectedBtn = e.target.closest('.option');
     const selectedIndex = parseInt(selectedBtn.dataset.index);
     const q = currentRoundQuestions[currentQuestionIndex];
     
-    // Disable all options
-    const optionBtns = document.querySelectorAll('.option');
-    optionBtns.forEach(btn => btn.disabled = true);
+    const optionBtns = DOM.quiz.options.querySelectorAll('.option');
+    const reasonings = parseDistractorReasoning(q.explanation);
+    const correctReasoning = extractCorrectReasoning(q.explanation);
+
+    optionBtns.forEach((btn, index) => {
+        btn.disabled = true;
+        if (index === q.correctAnswer) btn.classList.add('correct');
+        if (index === selectedIndex && selectedIndex !== q.correctAnswer) btn.classList.add('wrong');
+        
+        const reasoningDiv = btn.querySelector('.option-reasoning');
+        const letter = String.fromCharCode(65 + index);
+        
+        if (index === q.correctAnswer) {
+            reasoningDiv.innerHTML = `<strong>Correct:</strong> ${correctReasoning}`;
+        } else {
+            reasoningDiv.innerHTML = `<strong>Note:</strong> ${reasonings[letter] || 'Incorrect option.'}`;
+        }
+        reasoningDiv.classList.remove('hidden');
+    });
     
     if (selectedIndex === q.correctAnswer) {
-        // Correct
-        selectedBtn.classList.add('correct');
         score++;
         triggerConfettiMini();
         const cat = q.category || 'General';
@@ -254,10 +333,6 @@ function handleOptionClick(e) {
         categoryStats[cat].total++;
         categoryStats[cat].correct++;
     } else {
-        // Wrong
-        selectedBtn.classList.add('wrong');
-        // Highlight correct answer
-        optionBtns[q.correctAnswer].classList.add('correct');
         wrongQuestions.push({
             questionData: q,
             selectedOption: selectedIndex
@@ -271,98 +346,98 @@ function handleOptionClick(e) {
     DOM.btns.next.classList.remove('hidden');
 }
 
+function parseDistractorReasoning(explanation) {
+    const reasonings = {};
+    const incorrectPart = explanation.split('INCORRECT:')[1] || explanation.split('Why others are wrong:')[1] || '';
+    const letters = ['A', 'B', 'C', 'D'];
+    
+    let hasLetters = letters.some(l => incorrectPart.includes(`${l} - `));
+    
+    if (hasLetters) {
+        letters.forEach((letter) => {
+            const startMarker = `${letter} - `;
+            let startIdx = incorrectPart.indexOf(startMarker);
+            if (startIdx !== -1) {
+                startIdx += startMarker.length;
+                let endIdx = -1;
+                const markers = ['A - ', 'B - ', 'C - ', 'D - ', 'CLINICAL PEARL:', 'REFERENCE:'];
+                markers.forEach(marker => {
+                    const mIdx = incorrectPart.indexOf(marker, startIdx);
+                    if (mIdx !== -1 && (endIdx === -1 || mIdx < endIdx)) endIdx = mIdx;
+                });
+                let text = endIdx === -1 ? incorrectPart.substring(startIdx).trim() : incorrectPart.substring(startIdx, endIdx).trim();
+                reasonings[letter] = text.replace(/[;.,]$/, '');
+            }
+        });
+    } else if (incorrectPart.trim()) {
+        // This is a safety measure so they aren't empty
+        letters.forEach(letter => {
+            reasonings[letter] = incorrectPart.split('CLINICAL PEARL:')[0].split('REFERENCE:')[0].trim();
+        });
+    }
+    return reasonings;
+}
+
+function extractCorrectReasoning(explanation) {
+    let text = explanation.split('INCORRECT:')[0].replace('CORRECT:', '').trim();
+    // Also remove Pearl and Reference if they leaked into the CORRECT block
+    text = text.split('CLINICAL PEARL:')[0].split('REFERENCE:')[0].trim();
+    return text || 'Correct Answer.';
+}
+
 function handleTimeUp() {
-    // Disable all options
-    const optionBtns = document.querySelectorAll('.option');
+    const optionBtns = DOM.quiz.options.querySelectorAll('.option');
     optionBtns.forEach(btn => btn.disabled = true);
-    
     const q = currentRoundQuestions[currentQuestionIndex];
-    // Highlight correct answer
     optionBtns[q.correctAnswer].classList.add('correct');
-    
-    wrongQuestions.push({
-        questionData: q,
-        selectedOption: -1 // Indicates time up
-    });
-    
+    wrongQuestions.push({ questionData: q, selectedOption: -1 });
     const cat = q.category || 'General';
     if (!categoryStats[cat]) categoryStats[cat] = { total: 0, correct: 0 };
     categoryStats[cat].total++;
-    
     showExplanation(q);
     DOM.btns.next.classList.remove('hidden');
 }
 
-function nextQuestion() {
+function handleNextQuestion() {
     currentQuestionIndex++;
     if (currentQuestionIndex < currentRoundQuestions.length) {
         loadQuestion();
     } else {
-        endQuiz();
+        finishQuiz();
     }
 }
 
-function endQuiz() {
-    switchScreen('result');
-    DOM.result.score.textContent = score;
-    
-    let message = '';
-    if (score === currentRoundQuestions.length) {
-        message = 'Perfect! You are completely ready for the exam!';
-        triggerConfettiMassive();
-    } else if (score >= currentRoundQuestions.length * 0.8) {
-        message = 'Outstanding job! Almost perfect.';
-        triggerConfettiMassive();
-    } else if (score >= currentRoundQuestions.length * 0.6) {
-        message = 'Good effort! A little more review and you\'ll nail it.';
-    } else {
-        message = 'Don\'t give up! Keep practicing and reviewing the concepts.';
-    }
-    
-    DOM.result.message.textContent = message;
-    
-    // Update and Save Global Stats
+function finishQuiz() {
     userStats.totalSolved += currentRoundQuestions.length;
     userStats.totalCorrect += score;
     if (score > userStats.highScore) userStats.highScore = score;
     saveStats();
     
-    // Render Knowledge Map
+    DOM.result.score.textContent = score;
+    DOM.result.message.textContent = score >= 7 ? "Excellent performance!" : score >= 5 ? "Good effort!" : "Keep practicing!";
+    
+    renderKnowledgeMap();
+    switchScreen('result');
+    if (score >= 8) triggerConfettiFull();
+}
+
+function renderKnowledgeMap() {
     DOM.result.kMapBars.innerHTML = '';
     const percentages = [];
-    
     for (const cat in categoryStats) {
         const stats = categoryStats[cat];
         const pct = Math.round((stats.correct / stats.total) * 100);
         percentages.push(pct);
-        
-        const barHtml = `
-            <div class="k-bar-container">
-                <div class="k-bar-header">
-                    <span>${cat}</span>
-                    <span>${pct}% (${stats.correct}/${stats.total})</span>
-                </div>
-                <div class="k-bar-bg">
-                    <div class="k-bar-fill" style="width: 0%"></div>
-                </div>
-            </div>
-        `;
+        const barHtml = `<div class="k-bar-container"><div class="k-bar-header"><span>${cat}</span><span>${pct}% (${stats.correct}/${stats.total})</span></div><div class="k-bar-bg"><div class="k-bar-fill" style="width: 0%"></div></div></div>`;
         DOM.result.kMapBars.insertAdjacentHTML('beforeend', barHtml);
     }
-    
-    // Trigger animations for all bars at once
     setTimeout(() => {
         const fills = DOM.result.kMapBars.querySelectorAll('.k-bar-fill');
-        fills.forEach((fill, index) => {
-            fill.style.width = `${percentages[index]}%`;
-        });
+        fills.forEach((fill, i) => fill.style.width = `${percentages[i]}%`);
     }, 50);
     
-    if (wrongQuestions.length > 0) {
-        DOM.btns.reviewErrors.classList.remove('hidden');
-    } else {
-        DOM.btns.reviewErrors.classList.add('hidden');
-    }
+    if (wrongQuestions.length > 0) DOM.btns.reviewErrors.classList.remove('hidden');
+    else DOM.btns.reviewErrors.classList.add('hidden');
 }
 
 function initReview() {
@@ -375,151 +450,129 @@ function initReview() {
 function loadReviewQuestion() {
     const errorData = wrongQuestions[reviewIndex];
     const q = errorData.questionData;
-    
     DOM.review.qNum.textContent = reviewIndex + 1;
     DOM.review.category.textContent = q.category || 'General';
     DOM.review.question.textContent = q.question;
     DOM.review.options.innerHTML = '';
     
+    const reasonings = parseDistractorReasoning(q.explanation);
+    const correctReasoning = extractCorrectReasoning(q.explanation);
+
     q.options.forEach((optText, index) => {
         const btn = document.createElement('button');
         btn.classList.add('option');
-        btn.textContent = optText;
         btn.disabled = true;
-        
-        if (index === q.correctAnswer) {
-            btn.classList.add('correct');
-        } else if (index === errorData.selectedOption) {
-            btn.classList.add('wrong');
-        }
-        
+        if (index === q.correctAnswer) btn.classList.add('correct');
+        else if (index === errorData.selectedOption) btn.classList.add('wrong');
+
+        const mainDiv = document.createElement('div');
+        mainDiv.classList.add('option-main');
+        mainDiv.textContent = optText;
+        btn.appendChild(mainDiv);
+
+        const reasoningDiv = document.createElement('div');
+        reasoningDiv.classList.add('option-reasoning');
+        const letter = String.fromCharCode(65 + index);
+        if (index === q.correctAnswer) reasoningDiv.innerHTML = `<strong>Correct:</strong> ${correctReasoning}`;
+        else reasoningDiv.innerHTML = `<strong>Note:</strong> ${reasonings[letter] || 'Incorrect option.'}`;
+        btn.appendChild(reasoningDiv);
         DOM.review.options.appendChild(btn);
     });
     
     if (q.explanation) {
-        DOM.review.explanationText.innerHTML = q.explanation.replace(/Correct Answer:/g, '<strong>Correct Answer:</strong>').replace(/Why others are wrong:/g, '<br><br><strong>Why others are wrong:</strong>');
+        if (q.clinicalPearl) {
+            DOM.review.pearlContainer.innerHTML = `💎 <strong>Clinical Pearl:</strong> ${q.clinicalPearl}`;
+            DOM.review.pearlContainer.classList.remove('hidden');
+        } else { DOM.review.pearlContainer.classList.add('hidden'); }
+        if (q.reference) {
+            DOM.review.referenceText.innerHTML = `📚 <strong>Reference:</strong> ${q.reference}`;
+            DOM.review.referenceText.classList.remove('hidden');
+        } else { DOM.review.referenceText.classList.add('hidden'); }
     }
-    
     updateFavoriteUI(q);
-    
-    DOM.btns.reviewPrev.style.display = reviewIndex > 0 ? 'block' : 'none';
-    DOM.btns.reviewNext.style.display = reviewIndex < wrongQuestions.length - 1 ? 'block' : 'none';
 }
 
-function reviewNext() {
+function handleReviewNext() {
     if (reviewIndex < wrongQuestions.length - 1) {
         reviewIndex++;
         loadReviewQuestion();
     }
 }
 
-function reviewPrev() {
+function handleReviewPrev() {
     if (reviewIndex > 0) {
         reviewIndex--;
         loadReviewQuestion();
     }
 }
 
-function showProfile() {
+function updateProfile() {
     DOM.profile.totalSolved.textContent = userStats.totalSolved;
     DOM.profile.highScore.textContent = userStats.highScore;
     const accuracy = userStats.totalSolved > 0 ? Math.round((userStats.totalCorrect / userStats.totalSolved) * 100) : 0;
     DOM.profile.avgAccuracy.textContent = `${accuracy}%`;
     DOM.profile.favCount.textContent = favorites.length;
     DOM.btns.reviewFavorites.disabled = favorites.length === 0;
-    switchScreen('profile');
 }
 
-async function refreshQuestionBank() {
-    DOM.btns.refreshBank.textContent = "Fetching...";
+function refreshQuestionBank() {
+    DOM.btns.refreshBank.textContent = "Updating...";
     DOM.btns.refreshBank.disabled = true;
-    try {
-        // Fetch from the centralized JSON database URL (simulated here with QUESTIONS_URL)
-        const response = await fetch(QUESTIONS_URL);
-        const newQuestions = await response.json();
-        
-        let added = 0;
-        newQuestions.forEach(nq => {
-            if (!allQuestions.some(q => q.question === nq.question)) {
-                customQuestions.push(nq);
-                allQuestions.push(nq);
-                added++;
-            }
-        });
-        saveStats();
-        alert(added > 0 ? `Successfully fetched ${added} new questions!` : `Your question bank is already up to date.`);
-    } catch(e) {
-        alert("Failed to fetch new questions.");
-    }
-    DOM.btns.refreshBank.textContent = "Refresh Question Bank";
-    DOM.btns.refreshBank.disabled = false;
-}
-
-function exitQuizHalfway() {
-    clearInterval(timerInterval);
-    // Save partial progress
-    const isAnswerLocked = !DOM.btns.next.classList.contains('hidden');
-    const solvedThisRound = isAnswerLocked ? currentQuestionIndex + 1 : currentQuestionIndex;
-    
-    if (solvedThisRound > 0) {
-        userStats.totalSolved += solvedThisRound;
-        userStats.totalCorrect += score;
-        if (score > userStats.highScore) userStats.highScore = score;
-        saveStats();
-    }
-    
-    switchScreen('landing');
-}
-
-function triggerConfettiMini() {
-    confetti({
-        particleCount: 50,
-        spread: 60,
-        origin: { y: 0.8 },
-        colors: ['#10b981', '#34d399']
+    loadQuestions().then(() => {
+        setTimeout(() => {
+            DOM.btns.refreshBank.textContent = "Refresh Question Bank";
+            DOM.btns.refreshBank.disabled = false;
+            updateProfile();
+            alert("Question bank updated successfully!");
+        }, 1000);
     });
 }
 
-function triggerConfettiMassive() {
-    var duration = 3 * 1000;
-    var end = Date.now() + duration;
+function exitQuizHalfway() {
+    if (confirm("Are you sure you want to exit? Your progress for this round will be saved in your profile stats.")) {
+        userStats.totalSolved += currentQuestionIndex;
+        userStats.totalCorrect += score;
+        saveStats();
+        switchScreen('landing');
+    }
+}
 
-    (function frame() {
-        confetti({
-            particleCount: 5,
-            angle: 60,
-            spread: 55,
-            origin: { x: 0 },
-            colors: ['#3b82f6', '#a78bfa', '#60a5fa']
-        });
-        confetti({
-            particleCount: 5,
-            angle: 120,
-            spread: 55,
-            origin: { x: 1 },
-            colors: ['#3b82f6', '#a78bfa', '#60a5fa']
-        });
+function triggerConfettiMini() {
+    confetti({ particleCount: 30, spread: 50, origin: { y: 0.7 }, colors: ['#3b82f6', '#8b5cf6', '#10b981'] });
+}
 
-        if (Date.now() < end) {
-            requestAnimationFrame(frame);
-        }
-    }());
+function triggerConfettiFull() {
+    const duration = 3 * 1000;
+    const animationEnd = Date.now() + duration;
+    const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+    const interval = setInterval(function() {
+        const timeLeft = animationEnd - Date.now();
+        if (timeLeft <= 0) return clearInterval(interval);
+        const particleCount = 50 * (timeLeft / duration);
+        confetti(Object.assign({}, defaults, { particleCount, origin: { x: Math.random() - 0.2, y: Math.random() - 0.3 } }));
+        confetti(Object.assign({}, defaults, { particleCount, origin: { x: Math.random() + 0.2, y: Math.random() - 0.3 } }));
+    }, 250);
+}
+
+function getTierLabel(tier) {
+    const labels = { 1: 'Recall', 2: 'Application', 3: 'Clinical Reasoning', 4: 'Expert Synthesis' };
+    return labels[tier] || 'Specialist';
 }
 
 // Event Listeners
 DOM.btns.start.addEventListener('click', startNewRound);
-DOM.btns.next.addEventListener('click', nextQuestion);
+DOM.btns.next.addEventListener('click', handleNextQuestion);
 DOM.btns.restart.addEventListener('click', startNewRound);
 DOM.btns.reviewErrors.addEventListener('click', initReview);
-DOM.btns.reviewNext.addEventListener('click', reviewNext);
-DOM.btns.reviewPrev.addEventListener('click', reviewPrev);
+DOM.btns.reviewNext.addEventListener('click', handleReviewNext);
+DOM.btns.reviewPrev.addEventListener('click', handleReviewPrev);
 DOM.btns.backToResults.addEventListener('click', () => switchScreen('result'));
-DOM.btns.viewProfile.addEventListener('click', showProfile);
+DOM.btns.viewProfile.addEventListener('click', () => { updateProfile(); switchScreen('profile'); });
 DOM.btns.profileBack.addEventListener('click', () => switchScreen('landing'));
 DOM.btns.favorite.addEventListener('click', toggleFavorite);
-DOM.btns.reviewFavorite.addEventListener('click', toggleFavorite);
-DOM.btns.reviewFavorites.addEventListener('click', startFavoritesRound);
 DOM.btns.refreshBank.addEventListener('click', refreshQuestionBank);
+DOM.btns.viewDB.addEventListener('click', () => switchScreen('db'));
+DOM.btns.dbBack.addEventListener('click', () => switchScreen('landing'));
 DOM.btns.home.addEventListener('click', () => switchScreen('landing'));
 DOM.btns.exitQuiz.addEventListener('click', exitQuizHalfway);
 
