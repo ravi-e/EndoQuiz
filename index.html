@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Endodontics Mastery Quiz</title>
+    <!-- PWA Manifest & Theme Color -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0f172a">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="background-mesh"></div>
+    
+    <div class="app-container">
+        <!-- Landing Screen -->
+        <div id="landing-screen" class="screen active">
+            <h1>Endodontics Mastery</h1>
+            <p>Test your knowledge for Prometric Exams (DHA, SDLE, QCHP)</p>
+            <div class="info-badges">
+                <span class="badge">10 Questions</span>
+                <span class="badge">60s Timer</span>
+                <span class="badge">Randomized Pool</span>
+            </div>
+            <div class="result-actions">
+                <button id="start-btn" class="primary-btn">Start Quiz</button>
+                <button id="view-profile-btn" class="secondary-btn">My Profile</button>
+            </div>
+        </div>
+
+        <!-- Profile Screen -->
+        <div id="profile-screen" class="screen">
+            <div class="quiz-header">
+                <h2>My Profile</h2>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-value" id="stat-total-solved">0</span>
+                    <span class="stat-label">Total Solved</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-value" id="stat-high-score">0</span>
+                    <span class="stat-label">High Score</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-value" id="stat-avg-accuracy">0%</span>
+                    <span class="stat-label">Avg Accuracy</span>
+                </div>
+            </div>
+
+            <div class="profile-actions">
+                <button id="review-favorites-btn" class="primary-btn">Review Favorites (<span id="fav-count">0</span>)</button>
+                <button id="refresh-bank-btn" class="secondary-btn">Refresh Question Bank</button>
+            </div>
+            
+            <button id="profile-back-btn" class="secondary-btn mt-10">Back to Home</button>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div id="quiz-screen" class="screen">
+            <div class="quiz-header">
+                <div style="display: flex; gap: 15px; align-items: center;">
+                    <button id="exit-quiz-btn" class="icon-btn" style="color: #f87171; border-color: rgba(248, 113, 113, 0.3); padding: 4px 8px; font-size: 0.8rem;">✕ Exit</button>
+                    <div class="question-tracker">Question <span id="current-q-num">1</span>/10</div>
+                </div>
+                <div class="timer-container">
+                    <div class="timer-bar" id="timer-bar"></div>
+                    <div class="timer-text" id="timer-text">60s</div>
+                </div>
+            </div>
+            
+            <div class="category-badge" id="category-badge">Category</div>
+            
+            <h2 id="question-text">Question goes here...</h2>
+            
+            <div class="options-container" id="options-container">
+                <!-- Options will be injected here via JS -->
+            </div>
+            
+            <div id="explanation-container" class="explanation-box hidden">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                    <h3 style="margin-bottom: 0;">Explanation</h3>
+                    <button id="favorite-btn" class="icon-btn">☆ Save</button>
+                </div>
+                <p id="explanation-text"></p>
+            </div>
+            
+            <button id="next-btn" class="primary-btn hidden">Next Question</button>
+        </div>
+
+        <!-- Result Screen -->
+        <div id="result-screen" class="screen">
+            <h2>Quiz Complete!</h2>
+            <div class="score-display">
+                <span id="final-score">0</span><span class="total">/10</span>
+            </div>
+            <p id="result-message" class="result-message">Great job!</p>
+            
+            <div class="knowledge-map" id="knowledge-map">
+                <h3>Knowledge Map</h3>
+                <div id="knowledge-map-bars"></div>
+            </div>
+
+            <div class="result-actions">
+                <button id="review-errors-btn" class="secondary-btn hidden">Review Errors</button>
+                <button id="restart-btn" class="primary-btn">Take a New Quiz</button>
+                <button id="home-btn" class="secondary-btn">Return to Home</button>
+            </div>
+        </div>
+
+        <!-- Review Screen -->
+        <div id="review-screen" class="screen">
+            <div class="quiz-header">
+                <div class="question-tracker">Review <span id="review-q-num">1</span>/<span id="review-q-total">1</span></div>
+            </div>
+            
+            <div class="category-badge" id="review-category-badge">Category</div>
+            
+            <h2 id="review-question-text">Question goes here...</h2>
+            
+            <div class="options-container" id="review-options-container">
+                <!-- Options will be injected here via JS -->
+            </div>
+            
+            <div class="explanation-box review-mode">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                    <h3 style="margin-bottom: 0;">Explanation</h3>
+                    <button id="review-favorite-btn" class="icon-btn">☆ Save</button>
+                </div>
+                <p id="review-explanation-text"></p>
+            </div>
+            
+            <div class="result-actions">
+                <button id="review-prev-btn" class="secondary-btn">Previous</button>
+                <button id="review-next-btn" class="primary-btn">Next</button>
+            </div>
+            <button id="back-to-results-btn" class="secondary-btn mt-10">Back to Results</button>
+        </div>
+    </div>
+
+    <!-- JS Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- Custom JS -->
+    <script src="app.js"></script>
+    <!-- Register Service Worker -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').then(reg => {
+                    console.log('SW registered!', reg);
+                }).catch(err => console.log('SW registration failed', err));
+            });
+        }
+    </script>
+</body>
+</html>
