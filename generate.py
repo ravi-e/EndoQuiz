@@ -1,6 +1,8 @@
 import os
 import json
+import time
 from google import genai
+from google.genai import types
 import re
 from collections import Counter
 from difflib import SequenceMatcher
@@ -12,6 +14,10 @@ if API_KEY:
     client = genai.Client(api_key=API_KEY)
 
 QUESTIONS_FILE = 'questions.json'
+IMAGE_DIR = 'images'
+
+if not os.path.exists(IMAGE_DIR):
+    os.makedirs(IMAGE_DIR)
 
 def load_existing_questions():
     if os.path.exists(QUESTIONS_FILE):
@@ -25,6 +31,39 @@ def load_existing_questions():
 def save_questions(questions):
     with open(QUESTIONS_FILE, 'w', encoding='utf-8') as f:
         json.dump(questions, f, indent=2, ensure_ascii=False)
+
+def generate_image_asset(prompt, filename):
+    """
+    Calls Imagen 3 to generate a clinical diagnostic image.
+    Saves the image to the local images directory.
+    """
+    if not client:
+        return False
+        
+    try:
+        print(f"  [IMAGE] Generating: {filename}...")
+        # Add medical styling to ensure professional look
+        enhanced_prompt = f"Professional clinical dental diagnostic image. {prompt}. Medical radiology style, monochrome, high contrast, clean background, sharp detail."
+        
+        response = client.models.generate_images(
+            model='gemini-3.1-flash-image-preview',
+            prompt=enhanced_prompt,
+            config=types.GenerateImagesConfig(
+                number_of_images=1,
+                include_rai_reason=True
+            )
+        )
+        
+        if response.generated_images:
+            image_data = response.generated_images[0]
+            file_path = os.path.join(IMAGE_DIR, os.path.basename(filename))
+            image_data.image.save(file_path)
+            print(f"  [IMAGE] Saved to {file_path}")
+            return True
+        return False
+    except Exception as e:
+        print(f"  [IMAGE ERROR] Failed to generate {filename}: {e}")
+        return False
 
 def validate_question(q):
     """
@@ -197,7 +236,7 @@ CLINICAL VIGNETTE RULES (Tier 2-4):
 - Irrigation/obturation questions MUST anchor to current AAE/ESE position statements
 - Systemic conditions must directly affect the management decision — do not include irrelevant medical history
 - IMAGE SUPPORT: For CBCT, Trauma, and Resorption questions, you can now include an optional "image" field.
-  - If using "image", provide a descriptive placeholder path: "images/cbct_analysis_01.jpg", "images/trauma_case_02.png", etc.
+  - If using "image", provide a descriptive placeholder path: "images/case_[TIMESTAMP]_[RANDOM].jpg"
   - The question stem must explicitly refer to the image (e.g., "Based on the provided CBCT slice...").
   - Always provide an "imageAlt" description for accessibility and clarity.
 
@@ -268,7 +307,7 @@ Field notes:
     
     response_text = response.text.strip()
     
-    # Strip markdown formatting if the model still outputs it
+    # Strip markdown formatting
     if response_text.startswith("```json"):
         response_text = response_text[7:]
     if response_text.startswith("```"):
@@ -283,8 +322,6 @@ Field notes:
         return new_questions
     except Exception as e:
         print(f"Failed to parse API response: {e}")
-        print("Raw Response:")
-        print(response_text)
         return []
 
 def main():
@@ -292,62 +329,67 @@ def main():
     print(f"Loaded {len(existing_questions)} existing questions.")
     
     total_new_added = 0
-    daily_target = {1: 6, 2: 20, 3: 18, 4: 6} # 2 batches of 25
+    daily_target = {1: 6, 2: 20, 3: 18, 4: 6} # 50 questions per day
     accumulated_dist = Counter()
     
     for i in range(2):
         print(f"\n--- Generation Batch {i+1} of 2 ---")
         
-        # Self-healing: Adjust target for second batch based on Batch 1 results
         current_target = {1: 3, 2: 10, 3: 9, 4: 3}
-        if i == 1: # Batch 2
-            print("Self-Healing: Adjusting Batch 2 target based on Batch 1 results...")
+        if i == 1:
             for tier in [1, 2, 3, 4]:
-                # target for batch 2 = daily_target - batch_1_actual
                 current_target[tier] = max(0, daily_target[tier] - accumulated_dist.get(tier, 0))
-            print(f"New Target: {current_target}")
 
         batch_questions = generate_new_questions(existing_questions, current_target)
+        # Inter-batch cooldown for text generation
+        time.sleep(5)
         
         if batch_questions and len(batch_questions) > 0:
             print(f"API returned {len(batch_questions)} questions. Validating...")
             
             valid_questions = []
-            rejected_count = 0
-            
             for q in batch_questions:
                 errors = validate_question(q)
-                if not errors:
-                    valid_questions.append(q)
-                else:
-                    rejected_count += 1
-                    # print(f"  [REJECTED] {q.get('question', 'Unknown')[:50]}...")
-            
-            print(f"Validation Summary: {len(valid_questions)} PASSED, {rejected_count} REJECTED.")
-            
-            if len(valid_questions) > 0:
-                print(f"Checking for duplicates against {len(existing_questions)} existing questions...")
-                unique_new = []
-                dup_count = 0
                 
-                for q in valid_questions:
-                    is_dup, ratio = is_duplicate(q, existing_questions)
-                    if not is_dup:
-                        unique_new.append(q)
+                # Check for near-duplicates before proceeding
+                is_dup, ratio = is_duplicate(q, existing_questions)
+                
+                if not errors and not is_dup:
+                    # ATOMIC IMAGE GENERATION
+                    image_path = q.get('image')
+                    image_alt = q.get('imageAlt')
+                    
+                    if image_path and image_alt:
+                        # Clean up path to ensure uniqueness if the AI gave a generic one
+                        if 'placeholder' in image_path or 'case_' not in image_path:
+                            ts = int(time.time() * 1000)
+                            image_path = f"images/case_{ts}_{len(valid_questions)}.jpg"
+                            q['image'] = image_path
+                            
+                        # Attempt image generation
+                        success = generate_image_asset(image_alt, image_path)
+                        if success:
+                            valid_questions.append(q)
+                            existing_questions.append(q)
+                            accumulated_dist[q.get('tier')] += 1
+                            # Conservative cooldown for image generation safety
+                            time.sleep(20) 
+                        else:
+                            print(f"  [SKIPPED] Question rejected because image generation failed.")
+                    else:
+                        # Text-only question
+                        valid_questions.append(q)
                         existing_questions.append(q)
                         accumulated_dist[q.get('tier')] += 1
-                    else:
-                        dup_count += 1
-                
-                total_new_added += len(unique_new)
-                print(f"Deduplication Summary: Added {len(unique_new)} new unique questions. {dup_count} duplicates skipped.")
-                
-                # Audit this batch
-                audit_tiers(unique_new, current_target)
+                elif is_dup:
+                    print(f"  [SKIPPED] Duplicate detected (Ratio: {ratio:.2f})")
+            
+            total_new_added += len(valid_questions)
+            print(f"Batch Summary: {len(valid_questions)} unique questions added.")
+            audit_tiers(valid_questions, current_target)
         else:
             print("No valid questions generated in this batch.")
             
-    # Final Daily Audit
     print("\n" + "="*30)
     print("FINAL DAILY DISTRIBUTION REPORT")
     audit_tiers([q for q in existing_questions[-total_new_added:]] if total_new_added > 0 else [], daily_target)
@@ -355,7 +397,7 @@ def main():
             
     if total_new_added > 0:
         save_questions(existing_questions)
-        print(f"\nSUCCESS: Saved a total of {total_new_added} unique new questions to {QUESTIONS_FILE}.")
+        print(f"\nSUCCESS: Saved {total_new_added} unique new questions.")
     else:
         print("\nNo new questions were saved.")
 
