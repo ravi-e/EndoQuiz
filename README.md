@@ -45,4 +45,15 @@ This is a vanilla front-end application with no complex build dependencies.
 5. Ensure **Workflow Permissions** are set to "Read and write permissions" in Settings > Actions > General to allow the AI to commit new questions to your repository.
 
 ---
+
+## ⚠️ Disclaimer & Usage
+
+This project is **vibecoded** and utilizes **AI-generated content and images** for clinical diagnostic simulations. 
+
+- **Use at your own risk**: All content is generated for educational practice and should be independently verified against official AAE, IADT, and Prometric guidelines.
+- **Accuracy**: While the AI pipeline includes validation steps, medical/dental authenticity cannot be 100% guaranteed.
+- **Liability**: The author takes no responsibility for any issues, clinical decisions, or exam outcomes caused by the use of this application in real-world scenarios.
+- **Work in Progress**: This application is an evolving experiment. If you encounter errors, inaccuracies, or bugs, please **raise a Pull Request (PR)** or contribute to the healing of the database.
+
+---
 *Developed for Endodontic Specialist Board Preparation.*
