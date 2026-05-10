@@ -1,11 +1,11 @@
 const CACHE_NAME = 'endoquiz-v17';
 const ASSETS_TO_CACHE = [
-  '/',
-  '/index.html',
-  '/styles.css',
-  '/app.js',
-  '/questions.json',
-  '/icon.png',
+  './',
+  'index.html',
+  'styles.css',
+  'app.js',
+  'questions.json',
+  'icon.png',
   'https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap',
   'https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js'
 ];
