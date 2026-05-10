@@ -13,6 +13,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="styles.css">
+    
+    <!-- iOS Meta Tags & Splash Screens -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="EndoQuiz">
+    <link rel="apple-touch-icon" href="icon.png">
+    
+    <!-- Splash Screen Links (Simplified for demo, usually one per resolution) -->
+    <link rel="apple-touch-startup-image" href="splash.png" media="(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3)">
+    <link rel="apple-touch-startup-image" href="splash.png" media="(device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3)">
+    <link rel="apple-touch-startup-image" href="splash.png" media="(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3)">
+    <link rel="apple-touch-startup-image" href="splash.png" media="(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3)">
 </head>
 <body>
     <div class="background-mesh"></div>
@@ -34,8 +46,13 @@
                 </label>
                 <span>60s Timer per Question</span>
             </div>
+            
+            <div id="weak-spot-container" class="mt-10"></div>
+
             <div class="result-actions">
                 <button id="start-btn" class="primary-btn">Start Quiz</button>
+                <button id="srs-btn" class="secondary-btn" style="border-color: #8b5cf6; color: #a78bfa;">SRS Review (<span id="srs-count">0</span> Due)</button>
+                <button id="how-to-btn" class="secondary-btn">How to Use</button>
                 <button id="view-profile-btn" class="secondary-btn">My Profile</button>
                 <button id="view-db-btn" class="secondary-btn">Database Stats</button>
             </div>
@@ -60,6 +77,16 @@
                     <span class="stat-value" id="stat-avg-accuracy">0%</span>
                     <span class="stat-label">Avg Accuracy</span>
                 </div>
+            </div>
+
+            <div class="knowledge-map" style="margin-top: 24px;">
+                <h3>Cognitive Tier Analysis</h3>
+                <div id="tier-analysis-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px;"></div>
+            </div>
+
+            <div class="knowledge-map">
+                <h3>Domain Performance</h3>
+                <div id="performance-bars"></div>
             </div>
 
             <div class="profile-actions">
@@ -90,6 +117,47 @@
             <button id="db-back-btn" class="secondary-btn mt-10">Back to Home</button>
         </div>
 
+        <!-- Instructions Screen -->
+        <div id="instructions-screen" class="screen">
+            <div class="quiz-header">
+                <h2>Mastery Guide</h2>
+            </div>
+            
+            <div class="instruction-content" style="text-align: left; overflow-y: auto; max-height: 60vh; padding-right: 10px;">
+                <div class="instruction-card" style="background: rgba(255,255,255,0.03); padding: 20px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05); margin-bottom: 20px;">
+                    <h3 style="color: #60a5fa; margin-bottom: 12px; display: flex; align-items: center; gap: 10px;">🧠 Spaced Repetition (SRS)</h3>
+                    <p style="font-size: 0.95rem; line-height: 1.6; color: #cbd5e1;">Our <strong>SM-2 algorithm</strong> schedules reviews at optimal intervals. 
+                       <br><br>• <strong>Correct:</strong> Review pushes to next week/month.
+                       <br>• <strong>Wrong:</strong> Review resets to tomorrow.
+                       <br><br>Focus on your <strong>"Due Today"</strong> pool for maximum efficiency.</p>
+                </div>
+
+                <div class="instruction-card" style="background: rgba(255,255,255,0.03); padding: 20px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05); margin-bottom: 20px;">
+                    <h3 style="color: #f472b6; margin-bottom: 12px; display: flex; align-items: center; gap: 10px;">📊 Cognitive Tiers & Analytics</h3>
+                    <p style="font-size: 0.95rem; line-height: 1.6; color: #cbd5e1;">Questions are scaled from <strong>Tier 1 (Recall)</strong> to <strong>Tier 4 (Expert Synthesis)</strong>. 
+                       <br><br>Visit <strong>My Profile</strong> to view your performance grid and domain-specific accuracy to identify precisely where your clinical reasoning gaps are.</p>
+                </div>
+
+                <div class="instruction-card" style="background: rgba(255,255,255,0.03); padding: 20px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05); margin-bottom: 20px;">
+                    <h3 style="color: #8b5cf6; margin-bottom: 12px; display: flex; align-items: center; gap: 10px;">📸 Clinical Imaging</h3>
+                    <p style="font-size: 0.95rem; line-height: 1.6; color: #cbd5e1;">High-fidelity radiographic and CBCT images are included. 
+                       <br><br><strong>Tap any image</strong> to zoom in for detailed inspection of canals, fractures, or lesions.</p>
+                </div>
+
+                <div class="instruction-card" style="background: rgba(255,255,255,0.03); padding: 20px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05); margin-bottom: 20px;">
+                    <h3 style="color: #fb7185; margin-bottom: 12px; display: flex; align-items: center; gap: 10px;">🛡️ Study Guard</h3>
+                    <p style="font-size: 0.95rem; line-height: 1.6; color: #cbd5e1;">The app prevents accidental skips. You must select an answer before moving to the next question, ensuring your analytics remain accurate.</p>
+                </div>
+
+                <div class="instruction-card" style="background: rgba(255,255,255,0.03); padding: 20px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05); margin-bottom: 20px;">
+                    <h3 style="color: #10b981; margin-bottom: 12px; display: flex; align-items: center; gap: 10px;">📡 Offline Sync</h3>
+                    <p style="font-size: 0.95rem; line-height: 1.6; color: #cbd5e1;">Study anywhere. The PWA uses a <strong>Network-First</strong> strategy to keep your questions updated while providing seamless offline access.</p>
+                </div>
+            </div>
+            
+            <button id="instructions-back-btn" class="secondary-btn mt-10">Got it, Let's Go!</button>
+        </div>
+
         <!-- Quiz Screen -->
         <div id="quiz-screen" class="screen">
             <div class="quiz-header">
@@ -111,6 +179,7 @@
             
             <h2 id="question-text">Question goes here...</h2>
             
+            <div id="selection-guard" style="color: #f87171; font-size: 0.85rem; font-weight: 600; text-align: center; margin-bottom: 8px; opacity: 0; transition: opacity 0.3s ease;">⚠️ Select an answer to continue.</div>
             <div class="options-container" id="options-container">
                 <!-- Options will be injected here via JS -->
             </div>
@@ -121,7 +190,7 @@
                 <div id="reference-text" class="reference-label"></div>
             </div>
             
-            <button id="next-btn" class="primary-btn hidden">Next Question</button>
+            <button id="next-btn" class="primary-btn">Next Question</button>
         </div>
 
         <!-- Result Screen -->

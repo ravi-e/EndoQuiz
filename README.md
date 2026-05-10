@@ -1,34 +1,32 @@
 # Endodontics Mastery (EndoQuiz) 🦷
 
-A highly interactive, Progressive Web App (PWA) designed to help Endodontists prepare for Middle Eastern Prometric Specialist Exams (DHA, HAAD/DoH, QCHP, SCFHS). 
+A premium, highly interactive Progressive Web App (PWA) designed to help Endodontists prepare for Middle Eastern Prometric Specialist Exams (DHA, HAAD/DoH, QCHP, SCFHS). 
 
-The app features a modern, glassmorphism UI, comprehensive performance tracking, targeted studying mechanisms, and an AI-powered automation pipeline that guarantees a constantly evolving question bank.
+The app features a modern, glassmorphism UI, an advanced **Spaced Repetition System (SRS)**, and a self-healing AI pipeline that guarantees a high-fidelity, evolving question bank.
 
 ## ✨ Key Features
 
-- **Progressive Web App (PWA)**: Installable directly to mobile and desktop home screens. Fully functional offline with Version 17 caching.
-- **Split-Card Interaction**: Redesigned quiz logic that injects reasoning/justification directly beneath each selected option. This eliminates scrolling and provides immediate, context-aware feedback.
-- **Dynamic Difficulty Tiers**: Questions are categorized from Tier 1 (Recall) to Tier 4 (Expert Synthesis), mirroring the complexity of specialist-level board exams.
-- **Purple Brand Identity**: A cohesive design system with purple-themed toggles and mesh gradients tailored for the Endodontics Mastery brand.
-- **Database Dashboard**: A high-level "Knowledge Map" on the home screen that provides a bird's-eye view of the question bank growth and domain distribution.
-- **Study Mode & Timer**: Global purple-themed toggle to switch between a timed "Exam Mode" (60s per question) and a relaxed "Study Mode."
-- **Clinical Pearls & References**: High-yield learning reinforced with 💎 Clinical Pearls and 📚 Academic References (IADT, AAE, etc.) on separate lines for maximum clarity.
-- **Prominent Navigation**: A floating, high-visibility "Exit" button positioned for intuitive flow on both desktop and mobile devices.
+- **Spaced Repetition System (SRS)**: Integrated **SM-2 algorithm** that tracks your mastery. Correct answers push reviews further out, while mistakes trigger a review tomorrow, ensuring optimal long-term retention.
+- **Advanced Performance Analytics**: Deep diagnostic tracking including a **2x2 Cognitive Tier Grid** (Recall to Expert Synthesis) and **Per-Domain Accuracy Charts** with a 65% mastery threshold.
+- **Clinical Image Support**: High-fidelity radiographic, CBCT, and clinical photo support with **tap-to-zoom** functionality for detailed diagnostic inspection.
+- **Unanswered Question Guard**: Prevents accidental skips and data inflation. Includes a shake-animation and tooltip guard to ensure every session counts toward your score.
+- **Mastery Guide**: An on-device interactive manual explaining core app mechanics and specialist exam-prep strategies.
+- **Offline Background Sync**: PWA v20 utilizes a **Network-First** strategy for core assets (`app.js`, `styles.css`, `questions.json`), guaranteeing you always see the latest UI fixes when online while maintaining robust offline access.
+- **Split-Card Feedback**: Contextual reasoning injected directly beneath your selected option, providing immediate, scroll-free learning.
+- **Dynamic Difficulty Tiers**: Questions scaled from Tier 1 (Recall) to Tier 4 (Expert Synthesis), mirroring Prometric specialist board complexity.
 
 ## 🤖 Automated AI Pipeline
 
-This project is a self-maintaining learning platform. It utilizes **GitHub Actions** and **Google Gemini 1.5 Flash** (updated to the latest preview model) to automatically expand its knowledge base.
+The project features a robust, self-maintaining intelligence layer powered by **GitHub Actions** and **Google Gemini 3 Flash**.
 
-- **Daily Generation**: Every day at midnight UTC, the system generates **50 brand-new**, specialist-level clinical scenarios.
-- **Strict Clinical Formatting**: The AI is programmed with rigorous guardrails to ensure distractors are strictly separated (A-D) and clinical reasoning is high-fidelity.
-- **Self-Deduplicating**: The AI reviews the existing question bank to ensure no duplicates or near-duplicates are created.
-- **Clinical Vignette Quality**: Stems use FDI notation and standard clinical terminology, ensuring high-fidelity exam simulation.
-
-Users can tap the **"Refresh Question Bank"** button in their Profile to seamlessly download the latest daily questions.
+- **Self-Healing Generation**: The script audits every batch's difficulty distribution. If the AI drifts from the target balance (3/10/9/3), the system automatically adjusts the next batch's prompt to "heal" the bank's equilibrium.
+- **Fuzzy Deduplication**: Advanced **SequenceMatcher** analysis prevents near-duplicate questions (e.g., swapping a tooth number) from entering the database.
+- **Post-Generation Validation**: Every question undergoes a strict schema and quality check. Hallucinations or forbidden distractors (like "All of the above") are automatically rejected.
+- **Daily Updates**: Generates **50 new specialist-level cases** every 24 hours, anchored to current IADT and AAE guidelines.
 
 ## 🚀 Setup & Local Development
 
-This is a purely front-end application built with vanilla HTML5, CSS3, and JavaScript.
+This is a vanilla front-end application with no complex build dependencies.
 
 1. **Clone the repository**
 2. **Start a local server:**
@@ -40,8 +38,11 @@ This is a purely front-end application built with vanilla HTML5, CSS3, and JavaS
 
 ## 🌐 Deployment & Automation Setup
 
-1. Host the project securely using **GitHub Pages**.
-2. Obtain a free API Key from [Google AI Studio](https://aistudio.google.com/app/apikey).
-3. In your GitHub Repository, navigate to **Settings > Secrets and variables > Actions**.
-4. Add a new repository secret named `GEMINI_API_KEY` and paste your key.
-5. The daily automated question generation will now run automatically via GitHub Actions!
+1. Host the project using **GitHub Pages**.
+2. Obtain an API Key from [Google AI Studio](https://aistudio.google.com/app/apikey).
+3. In your GitHub Repository, go to **Settings > Secrets and variables > Actions**.
+4. Add a repository secret named `GEMINI_API_KEY`.
+5. Ensure **Workflow Permissions** are set to "Read and write permissions" in Settings > Actions > General to allow the AI to commit new questions to your repository.
+
+---
+*Developed for Endodontic Specialist Board Preparation.*

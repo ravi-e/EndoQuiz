@@ -2,14 +2,14 @@ import os
 import json
 from google import genai
 import re
+from collections import Counter
+from difflib import SequenceMatcher
 
 # Configure Gemini API
 API_KEY = os.environ.get("GEMINI_API_KEY")
-if not API_KEY:
-    print("Error: GEMINI_API_KEY environment variable not set.")
-    exit(1)
-
-client = genai.Client(api_key=API_KEY)
+client = None
+if API_KEY:
+    client = genai.Client(api_key=API_KEY)
 
 QUESTIONS_FILE = 'questions.json'
 
@@ -26,10 +26,108 @@ def save_questions(questions):
     with open(QUESTIONS_FILE, 'w', encoding='utf-8') as f:
         json.dump(questions, f, indent=2, ensure_ascii=False)
 
-def generate_new_questions(existing_questions):
-    # Extract existing question texts to try and avoid duplicates
-    existing_texts = [q['question'] for q in existing_questions[-50:]] # Only pass last 50 to save context window
+def validate_question(q):
+    """
+    Validates a single question object against the schema and quality rules.
+    Returns a list of error strings. If empty, the question is valid.
+    """
+    errors = []
+    required_fields = [
+        'question', 'options', 'correctAnswer', 'category', 
+        'tier', 'explanation', 'clinicalPearl', 'reference'
+    ]
     
+    # Check for missing fields
+    for field in required_fields:
+        if field not in q:
+            errors.append(f"Missing field: {field}")
+            
+    # Check options integrity
+    options = q.get('options', [])
+    if not isinstance(options, list):
+        errors.append("Field 'options' must be a list.")
+    elif len(options) != 4:
+        errors.append(f"Field 'options' must have exactly 4 strings (found {len(options)}).")
+    else:
+        # Check for forbidden phrases in options
+        forbidden = ['all of the above', 'none of the above', 'both a and c']
+        for opt in options:
+            if any(phrase in str(opt).lower() for phrase in forbidden):
+                errors.append(f"Forbidden phrase found in options: '{opt}'")
+
+    # Check correctAnswer range
+    ca = q.get('correctAnswer')
+    if not isinstance(ca, int):
+        errors.append(f"Field 'correctAnswer' must be an integer (found {type(ca).__name__}).")
+    elif not (0 <= ca <= 3):
+        errors.append(f"Field 'correctAnswer' must be between 0 and 3 (found {ca}).")
+
+    # Check tier range
+    tier = q.get('tier')
+    if tier is not None: # Tier is expected for new questions
+        if not isinstance(tier, int):
+            errors.append(f"Field 'tier' must be an integer (found {type(tier).__name__}).")
+        elif not (1 <= tier <= 4):
+            errors.append(f"Field 'tier' must be between 1 and 4 (found {tier}).")
+
+    # Basic string length check for core fields
+    for field in ['question', 'explanation', 'clinicalPearl']:
+        val = q.get(field, "")
+        if isinstance(val, str) and len(val.strip()) < 10:
+            errors.append(f"Field '{field}' is too short or empty.")
+
+    return errors
+
+def is_duplicate(new_q, existing_questions, threshold=0.75):
+    """
+    Checks if a question is a near-duplicate of any existing question
+    using fuzzy string matching.
+    """
+    new_text = new_q['question'].lower()
+    for existing in existing_questions:
+        ratio = SequenceMatcher(None, new_text, existing['question'].lower()).ratio()
+        if ratio > threshold:
+            return True, ratio
+    return False, 0
+
+def audit_tiers(questions, target_dist=None):
+    """
+    Audits the tier distribution of a batch of questions.
+    Returns a Counter of the actual distribution.
+    """
+    dist = Counter(q.get('tier') for q in questions)
+    print("\nTier Distribution Audit:")
+    
+    # Standard target if none provided
+    if not target_dist:
+        target_dist = {1: 3, 2: 10, 3: 9, 4: 3}
+        
+    for tier in sorted([1, 2, 3, 4]):
+        actual = dist.get(tier, 0)
+        expected = target_dist.get(tier, 0)
+        flag = "[OK]"
+        if expected > 0:
+            # Flag if deviation is significant (> 2)
+            if abs(actual - expected) > 2:
+                flag = "[!!]"
+        print(f"  {flag} Tier {tier}: {actual} (target {expected})")
+        
+    return dist
+
+def generate_new_questions(existing_questions, target_dist=None):
+    if not client:
+        print("Error: GEMINI_API_KEY environment variable not set.")
+        return []
+        
+    if not target_dist:
+        target_dist = {1: 3, 2: 10, 3: 9, 4: 3}
+        
+    # Extract existing question texts to try and avoid duplicates
+    existing_texts = [q['question'] for q in existing_questions[-50:]] 
+    
+    # Format target distribution for prompt
+    dist_str = f"{target_dist.get(1,0)} × Tier 1, {target_dist.get(2,0)} × Tier 2, {target_dist.get(3,0)} × Tier 3, {target_dist.get(4,0)} × Tier 4"
+
     prompt = f"""
 You are an expert Endodontist examiner writing questions for the Middle East Prometric Specialist Exams.
 Target exams: Dubai Health Authority (DHA), Department of Health Abu Dhabi (HAAD/DoH), SCFHS (Saudi), and QCHP (Qatar) Endodontics Specialist Exams.
@@ -67,7 +165,7 @@ LOWER PRIORITY — generate ~1 question across these domains:
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 DIFFICULTY TIER DISTRIBUTION (across the 25 questions):
-Assign approximately: 3 × Tier 1, 10 × Tier 2, 9 × Tier 3, 3 × Tier 4
+Assign EXACTLY: {dist_str}
 
 Tier 1 — Recall:
   Stem: 1-2 sentences. Minimal clinical hook. Tests direct knowledge.
@@ -98,6 +196,10 @@ CLINICAL VIGNETTE RULES (Tier 2-4):
 - Trauma questions MUST anchor to IADT 2020 guidelines
 - Irrigation/obturation questions MUST anchor to current AAE/ESE position statements
 - Systemic conditions must directly affect the management decision — do not include irrelevant medical history
+- IMAGE SUPPORT: For CBCT, Trauma, and Resorption questions, you can now include an optional "image" field.
+  - If using "image", provide a descriptive placeholder path: "images/cbct_analysis_01.jpg", "images/trauma_case_02.png", etc.
+  - The question stem must explicitly refer to the image (e.g., "Based on the provided CBCT slice...").
+  - Always provide an "imageAlt" description for accessibility and clarity.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 DISTRACTOR QUALITY RULES — apply all of the following:
@@ -145,6 +247,8 @@ OUTPUT RULES:
   "explanation": "CORRECT: [Detailed reasoning for the right answer] INCORRECT: A - [Reason why A is wrong]; B - [Reason why B is wrong]; C - [Reason why C is wrong]; D - [Reason why D is wrong] CLINICAL PEARL: [High-yield takeaway] REFERENCE: [Source]",
   "clinicalPearl": "A high-yield exam takeaway that MUST specifically relate to the clinical scenario described above. Do not provide a generic endodontic fact.",
   "reference": "Primary guideline or source (e.g., IADT 2020, AAE 2009, Heithersay 1999)",
+  "image": "images/placeholder.jpg",
+  "imageAlt": "A concise description of the finding in the image.",
   "CRITICAL": "In the explanation, you MUST strictly separate distractors using 'A - ', 'B - ', 'C - ', 'D - ' markers. NEVER use phrases like 'Why others are wrong' or bullet points. Each distractor reason MUST start with its letter marker."
 }}
 
@@ -152,6 +256,7 @@ Field notes:
   - "correctAnswer" is an integer index 0-3 matching the position in "options"
   - "tier" is an integer 1-4
   - "clinicalPearl" and "reference" are new fields — always include them
+  - "image" and "imageAlt" are OPTIONAL — only use for relevant clinical/radiographic cases.
   - Do not add any fields not listed above
 """
     
@@ -187,24 +292,66 @@ def main():
     print(f"Loaded {len(existing_questions)} existing questions.")
     
     total_new_added = 0
+    daily_target = {1: 6, 2: 20, 3: 18, 4: 6} # 2 batches of 25
+    accumulated_dist = Counter()
     
-    # We loop twice to generate 25 questions each time (50 total). 
-    # This prevents hitting the API's 8192 max output token limit.
     for i in range(2):
         print(f"\n--- Generation Batch {i+1} of 2 ---")
-        new_questions = generate_new_questions(existing_questions)
         
-        if new_questions and len(new_questions) > 0:
-            print(f"Successfully generated {len(new_questions)} questions in this batch.")
+        # Self-healing: Adjust target for second batch based on Batch 1 results
+        current_target = {1: 3, 2: 10, 3: 9, 4: 3}
+        if i == 1: # Batch 2
+            print("Self-Healing: Adjusting Batch 2 target based on Batch 1 results...")
+            for tier in [1, 2, 3, 4]:
+                # target for batch 2 = daily_target - batch_1_actual
+                current_target[tier] = max(0, daily_target[tier] - accumulated_dist.get(tier, 0))
+            print(f"New Target: {current_target}")
+
+        batch_questions = generate_new_questions(existing_questions, current_target)
+        
+        if batch_questions and len(batch_questions) > 0:
+            print(f"API returned {len(batch_questions)} questions. Validating...")
             
-            # Deduplicate exactly
-            existing_texts = {q['question'].lower() for q in existing_questions}
-            unique_new = [q for q in new_questions if q['question'].lower() not in existing_texts]
+            valid_questions = []
+            rejected_count = 0
             
-            existing_questions.extend(unique_new)
-            total_new_added += len(unique_new)
+            for q in batch_questions:
+                errors = validate_question(q)
+                if not errors:
+                    valid_questions.append(q)
+                else:
+                    rejected_count += 1
+                    # print(f"  [REJECTED] {q.get('question', 'Unknown')[:50]}...")
+            
+            print(f"Validation Summary: {len(valid_questions)} PASSED, {rejected_count} REJECTED.")
+            
+            if len(valid_questions) > 0:
+                print(f"Checking for duplicates against {len(existing_questions)} existing questions...")
+                unique_new = []
+                dup_count = 0
+                
+                for q in valid_questions:
+                    is_dup, ratio = is_duplicate(q, existing_questions)
+                    if not is_dup:
+                        unique_new.append(q)
+                        existing_questions.append(q)
+                        accumulated_dist[q.get('tier')] += 1
+                    else:
+                        dup_count += 1
+                
+                total_new_added += len(unique_new)
+                print(f"Deduplication Summary: Added {len(unique_new)} new unique questions. {dup_count} duplicates skipped.")
+                
+                # Audit this batch
+                audit_tiers(unique_new, current_target)
         else:
             print("No valid questions generated in this batch.")
+            
+    # Final Daily Audit
+    print("\n" + "="*30)
+    print("FINAL DAILY DISTRIBUTION REPORT")
+    audit_tiers([q for q in existing_questions[-total_new_added:]] if total_new_added > 0 else [], daily_target)
+    print("="*30)
             
     if total_new_added > 0:
         save_questions(existing_questions)
