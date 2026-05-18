@@ -1,6 +1,6 @@
 # Endodontics Mastery (EndoQuiz) 🦷
 
-A premium, highly interactive Progressive Web App (PWA) designed to help Endodontists prepare for Middle Eastern Prometric Specialist Exams (DHA, HAAD/DoH, QCHP, SCFHS). 
+A premium, highly interactive Progressive Web App (PWA) designed to help Endodontists prepare for Middle Eastern Prometric Specialist Exams (DHA, HAAD/DoH, QCHP, SCFHS).
 
 The app features a modern, glassmorphism UI, an advanced **Spaced Repetition System (SRS)**, and a self-healing AI pipeline that guarantees a high-fidelity, evolving question bank.
 
@@ -52,7 +52,7 @@ This is a vanilla front-end application with no complex build dependencies.
 
 ## ⚠️ Disclaimer & Usage
 
-This project is **vibecoded** and utilizes **AI-generated content and images** for clinical diagnostic simulations. 
+This project is **vibecoded** and utilizes **AI-generated content and images** for clinical diagnostic simulations.
 
 - **Use at your own risk**: All content is generated for educational practice and should be independently verified against official AAE, IADT, and Prometric guidelines.
 - **Accuracy**: While the AI pipeline includes validation steps, medical/dental authenticity cannot be 100% guaranteed.
@@ -60,4 +60,5 @@ This project is **vibecoded** and utilizes **AI-generated content and images** f
 - **Work in Progress**: This application is an evolving experiment. If you encounter errors, inaccuracies, or bugs, please **raise a Pull Request (PR)** or contribute to the healing of the database.
 
 ---
-*Developed for Endodontic Specialist Board Preparation.*
+
+_Developed for Endodontic Specialist Board Preparation._

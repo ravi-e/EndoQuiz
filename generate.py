@@ -3,7 +3,6 @@ import json
 import time
 from google import genai
 from google.genai import types
-import re
 from collections import Counter
 from difflib import SequenceMatcher
 
@@ -13,24 +12,27 @@ client = None
 if API_KEY:
     client = genai.Client(api_key=API_KEY)
 
-QUESTIONS_FILE = 'questions.json'
-IMAGE_DIR = 'images'
+QUESTIONS_FILE = "questions.json"
+IMAGE_DIR = "images"
 
 if not os.path.exists(IMAGE_DIR):
     os.makedirs(IMAGE_DIR)
 
+
 def load_existing_questions():
     if os.path.exists(QUESTIONS_FILE):
-        with open(QUESTIONS_FILE, 'r', encoding='utf-8') as f:
+        with open(QUESTIONS_FILE, "r", encoding="utf-8") as f:
             try:
                 return json.load(f)
             except json.JSONDecodeError:
                 return []
     return []
 
+
 def save_questions(questions):
-    with open(QUESTIONS_FILE, 'w', encoding='utf-8') as f:
+    with open(QUESTIONS_FILE, "w", encoding="utf-8") as f:
         json.dump(questions, f, indent=2, ensure_ascii=False)
+
 
 def generate_image_asset(prompt, filename):
     """
@@ -39,21 +41,20 @@ def generate_image_asset(prompt, filename):
     """
     if not client:
         return False
-        
+
     try:
         print(f"  [IMAGE] Generating: {filename}...")
         # Add medical styling to ensure professional look
         enhanced_prompt = f"Professional clinical dental diagnostic image. {prompt}. Medical radiology style, monochrome, high contrast, clean background, sharp detail."
-        
+
         response = client.models.generate_images(
-            model='gemini-3.1-flash-image-preview',
+            model="gemini-3.1-flash-image-preview",
             prompt=enhanced_prompt,
             config=types.GenerateImagesConfig(
-                number_of_images=1,
-                include_rai_reason=True
-            )
+                number_of_images=1, include_rai_reason=True
+            ),
         )
-        
+
         if response.generated_images:
             image_data = response.generated_images[0]
             file_path = os.path.join(IMAGE_DIR, os.path.basename(filename))
@@ -65,6 +66,7 @@ def generate_image_asset(prompt, filename):
         print(f"  [IMAGE ERROR] Failed to generate {filename}: {e}")
         return False
 
+
 def validate_question(q):
     """
     Validates a single question object against the schema and quality rules.
@@ -72,75 +74,89 @@ def validate_question(q):
     """
     errors = []
     required_fields = [
-        'question', 'options', 'correctAnswer', 'category', 
-        'tier', 'explanation', 'clinicalPearl', 'reference'
+        "question",
+        "options",
+        "correctAnswer",
+        "category",
+        "tier",
+        "explanation",
+        "clinicalPearl",
+        "reference",
     ]
-    
+
     # Check for missing fields
     for field in required_fields:
         if field not in q:
             errors.append(f"Missing field: {field}")
-            
+
     # Check options integrity
-    options = q.get('options', [])
+    options = q.get("options", [])
     if not isinstance(options, list):
         errors.append("Field 'options' must be a list.")
     elif len(options) != 4:
-        errors.append(f"Field 'options' must have exactly 4 strings (found {len(options)}).")
+        errors.append(
+            f"Field 'options' must have exactly 4 strings (found {len(options)})."
+        )
     else:
         # Check for forbidden phrases in options
-        forbidden = ['all of the above', 'none of the above', 'both a and c']
+        forbidden = ["all of the above", "none of the above", "both a and c"]
         for opt in options:
             if any(phrase in str(opt).lower() for phrase in forbidden):
                 errors.append(f"Forbidden phrase found in options: '{opt}'")
 
     # Check correctAnswer range
-    ca = q.get('correctAnswer')
+    ca = q.get("correctAnswer")
     if not isinstance(ca, int):
-        errors.append(f"Field 'correctAnswer' must be an integer (found {type(ca).__name__}).")
+        errors.append(
+            f"Field 'correctAnswer' must be an integer (found {type(ca).__name__})."
+        )
     elif not (0 <= ca <= 3):
         errors.append(f"Field 'correctAnswer' must be between 0 and 3 (found {ca}).")
 
     # Check tier range
-    tier = q.get('tier')
-    if tier is not None: # Tier is expected for new questions
+    tier = q.get("tier")
+    if tier is not None:  # Tier is expected for new questions
         if not isinstance(tier, int):
-            errors.append(f"Field 'tier' must be an integer (found {type(tier).__name__}).")
+            errors.append(
+                f"Field 'tier' must be an integer (found {type(tier).__name__})."
+            )
         elif not (1 <= tier <= 4):
             errors.append(f"Field 'tier' must be between 1 and 4 (found {tier}).")
 
     # Basic string length check for core fields
-    for field in ['question', 'explanation', 'clinicalPearl']:
+    for field in ["question", "explanation", "clinicalPearl"]:
         val = q.get(field, "")
         if isinstance(val, str) and len(val.strip()) < 10:
             errors.append(f"Field '{field}' is too short or empty.")
 
     return errors
 
+
 def is_duplicate(new_q, existing_questions, threshold=0.75):
     """
     Checks if a question is a near-duplicate of any existing question
     using fuzzy string matching.
     """
-    new_text = new_q['question'].lower()
+    new_text = new_q["question"].lower()
     for existing in existing_questions:
-        ratio = SequenceMatcher(None, new_text, existing['question'].lower()).ratio()
+        ratio = SequenceMatcher(None, new_text, existing["question"].lower()).ratio()
         if ratio > threshold:
             return True, ratio
     return False, 0
+
 
 def audit_tiers(questions, target_dist=None):
     """
     Audits the tier distribution of a batch of questions.
     Returns a Counter of the actual distribution.
     """
-    dist = Counter(q.get('tier') for q in questions)
+    dist = Counter(q.get("tier") for q in questions)
     print("\nTier Distribution Audit:")
-    
+
     # Standard target if none provided
     if not target_dist:
         target_dist = {1: 3, 2: 10, 3: 9, 4: 3}
-        
+
     for tier in sorted([1, 2, 3, 4]):
         actual = dist.get(tier, 0)
         expected = target_dist.get(tier, 0)
@@ -150,20 +166,21 @@ def audit_tiers(questions, target_dist=None):
             if abs(actual - expected) > 2:
                 flag = "[!!]"
         print(f"  {flag} Tier {tier}: {actual} (target {expected})")
-        
+
     return dist
+
 
 def generate_new_questions(existing_questions, target_dist=None):
     if not client:
         print("Error: GEMINI_API_KEY environment variable not set.")
         return []
-        
+
     if not target_dist:
         target_dist = {1: 3, 2: 10, 3: 9, 4: 3}
-        
+
     # Extract existing question texts to try and avoid duplicates
-    existing_texts = [q['question'] for q in existing_questions[-50:]] 
-    
+    existing_texts = [q["question"] for q in existing_questions[-50:]]
+
     # Format target distribution for prompt
     dist_str = f"{target_dist.get(1,0)} × Tier 1, {target_dist.get(2,0)} × Tier 2, {target_dist.get(3,0)} × Tier 3, {target_dist.get(4,0)} × Tier 4"
 
@@ -299,15 +316,14 @@ Field notes:
   - "image" and "imageAlt" are CONDITIONAL — include them only if the question absolutely warrants a visual diagnostic asset.
   - Do not add any fields not listed above
 """
-    
+
     print("Calling Gemini API...")
     response = client.models.generate_content(
-        model='gemini-3-flash-preview',
-        contents=prompt
+        model="gemini-3-flash-preview", contents=prompt
     )
-    
+
     response_text = response.text.strip()
-    
+
     # Strip markdown formatting
     if response_text.startswith("```json"):
         response_text = response_text[7:]
@@ -315,7 +331,7 @@ Field notes:
         response_text = response_text[3:]
     if response_text.endswith("```"):
         response_text = response_text[:-3]
-        
+
     try:
         new_questions = json.loads(response_text.strip())
         if not isinstance(new_questions, list):
@@ -325,82 +341,93 @@ Field notes:
         print(f"Failed to parse API response: {e}")
         return []
 
+
 def main():
     existing_questions = load_existing_questions()
     print(f"Loaded {len(existing_questions)} existing questions.")
-    
+
     total_new_added = 0
-    daily_target = {1: 6, 2: 20, 3: 18, 4: 6} # 50 questions per day
+    daily_target = {1: 6, 2: 20, 3: 18, 4: 6}  # 50 questions per day
     accumulated_dist = Counter()
-    
+
     for i in range(2):
         print(f"\n--- Generation Batch {i+1} of 2 ---")
-        
+
         current_target = {1: 3, 2: 10, 3: 9, 4: 3}
         if i == 1:
             for tier in [1, 2, 3, 4]:
-                current_target[tier] = max(0, daily_target[tier] - accumulated_dist.get(tier, 0))
+                current_target[tier] = max(
+                    0, daily_target[tier] - accumulated_dist.get(tier, 0)
+                )
 
         batch_questions = generate_new_questions(existing_questions, current_target)
         # Inter-batch cooldown for text generation
         time.sleep(5)
-        
+
         if batch_questions and len(batch_questions) > 0:
             print(f"API returned {len(batch_questions)} questions. Validating...")
-            
+
             valid_questions = []
             for q in batch_questions:
                 errors = validate_question(q)
-                
+
                 # Check for near-duplicates before proceeding
                 is_dup, ratio = is_duplicate(q, existing_questions)
-                
+
                 if not errors and not is_dup:
                     # ATOMIC IMAGE GENERATION
-                    image_path = q.get('image')
-                    image_alt = q.get('imageAlt')
-                    
+                    image_path = q.get("image")
+                    image_alt = q.get("imageAlt")
+
                     if image_path and image_alt:
                         # Clean up path to ensure uniqueness if the AI gave a generic one
-                        if 'placeholder' in image_path or 'case_' not in image_path:
+                        if "placeholder" in image_path or "case_" not in image_path:
                             ts = int(time.time() * 1000)
                             image_path = f"images/case_{ts}_{len(valid_questions)}.jpg"
-                            q['image'] = image_path
-                            
+                            q["image"] = image_path
+
                         # Attempt image generation
                         success = generate_image_asset(image_alt, image_path)
                         if success:
                             valid_questions.append(q)
                             existing_questions.append(q)
-                            accumulated_dist[q.get('tier')] += 1
+                            accumulated_dist[q.get("tier")] += 1
                             # Conservative cooldown for image generation safety
-                            time.sleep(20) 
+                            time.sleep(20)
                         else:
-                            print(f"  [SKIPPED] Question rejected because image generation failed.")
+                            print(
+                                "  [SKIPPED] Question rejected because image generation failed."
+                            )
                     else:
                         # Text-only question
                         valid_questions.append(q)
                         existing_questions.append(q)
-                        accumulated_dist[q.get('tier')] += 1
+                        accumulated_dist[q.get("tier")] += 1
                 elif is_dup:
                     print(f"  [SKIPPED] Duplicate detected (Ratio: {ratio:.2f})")
-            
+
             total_new_added += len(valid_questions)
             print(f"Batch Summary: {len(valid_questions)} unique questions added.")
             audit_tiers(valid_questions, current_target)
         else:
             print("No valid questions generated in this batch.")
-            
-    print("\n" + "="*30)
+
+    print("\n" + "=" * 30)
     print("FINAL DAILY DISTRIBUTION REPORT")
-    audit_tiers([q for q in existing_questions[-total_new_added:]] if total_new_added > 0 else [], daily_target)
-    print("="*30)
-            
+    audit_tiers(
+        [q for q in existing_questions[-total_new_added:]]
+        if total_new_added > 0
+        else [],
+        daily_target,
+    )
+    print("=" * 30)
+
     if total_new_added > 0:
         save_questions(existing_questions)
         print(f"\nSUCCESS: Saved {total_new_added} unique new questions.")
     else:
         print("\nNo new questions were saved.")
+
 
 if __name__ == "__main__":
     main()
