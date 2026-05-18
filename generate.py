@@ -235,10 +235,11 @@ CLINICAL VIGNETTE RULES (Tier 2-4):
 - Trauma questions MUST anchor to IADT 2020 guidelines
 - Irrigation/obturation questions MUST anchor to current AAE/ESE position statements
 - Systemic conditions must directly affect the management decision — do not include irrelevant medical history
-- IMAGE SUPPORT: For CBCT, Trauma, and Resorption questions, you can now include an optional "image" field.
-  - If using "image", provide a descriptive placeholder path: "images/case_[TIMESTAMP]_[RANDOM].jpg"
+- IMAGE SUPPORT: For CBCT, Trauma, and Resorption questions, determine if the clinical scenario absolutely warrants an image based on Prometric exam patterns.
+  - Aim for a healthy mix where about 10-20% of questions in these categories have images.
+  - If an image is warranted, you MUST provide an "image" field with a descriptive path: "images/case_[TIMESTAMP]_[RANDOM].jpg"
   - The question stem must explicitly refer to the image (e.g., "Based on the provided CBCT slice...").
-  - Always provide an "imageAlt" description for accessibility and clarity.
+  - Always provide an "imageAlt" description.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 DISTRACTOR QUALITY RULES — apply all of the following:
@@ -295,7 +296,7 @@ Field notes:
   - "correctAnswer" is an integer index 0-3 matching the position in "options"
   - "tier" is an integer 1-4
   - "clinicalPearl" and "reference" are new fields — always include them
-  - "image" and "imageAlt" are OPTIONAL — only use for relevant clinical/radiographic cases.
+  - "image" and "imageAlt" are CONDITIONAL — include them only if the question absolutely warrants a visual diagnostic asset.
   - Do not add any fields not listed above
 """
     

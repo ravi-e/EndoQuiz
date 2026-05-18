@@ -12,14 +12,18 @@ The app features a modern, glassmorphism UI, an advanced **Spaced Repetition Sys
 - **Unanswered Question Guard**: Prevents accidental skips and data inflation. Includes a shake-animation and tooltip guard to ensure every session counts toward your score.
 - **Mastery Guide**: An on-device interactive manual explaining core app mechanics and specialist exam-prep strategies.
 - **Offline Background Sync**: PWA v20 utilizes a **Network-First** strategy for core assets (`app.js`, `styles.css`, `questions.json`), guaranteeing you always see the latest UI fixes when online while maintaining robust offline access.
+- **Interactive Source References**: Every question includes a clickable, authoritative source link, enabling instant verification of clinical data against primary literature and building trust in the study material.
+- **Optimized UI/UX**: Features a highly interactive split-card quiz UI with a prominent header-based exit button and distinct emoji-labeled clinical data for a seamless study experience.
 - **Split-Card Feedback**: Contextual reasoning injected directly beneath your selected option, providing immediate, scroll-free learning.
 - **Dynamic Difficulty Tiers**: Questions scaled from Tier 1 (Recall) to Tier 4 (Expert Synthesis), mirroring Prometric specialist board complexity.
 
 ## 🤖 Automated AI Pipeline
 
-The project features a robust, self-maintaining intelligence layer powered by **GitHub Actions** and **Google Gemini 3 Flash**.
+The project features a robust, self-maintaining intelligence layer powered by **GitHub Actions** and the Gemini API (including `gemini-3.1-flash-image-preview` for visual assets).
 
-- **Self-Healing Generation**: The script audits every batch's difficulty distribution. If the AI drifts from the target balance (3/10/9/3), the system automatically adjusts the next batch's prompt to "heal" the bank's equilibrium.
+- **Automated Clinical Image Generation**: An autonomous pipeline evaluates clinical scenarios and generates visual diagnostic assets only when medically warranted (e.g., complex CBCTs or trauma cases), mirroring the realistic frequency of Prometric board exams. It includes an atomic "all-or-nothing" validation flow for these specific cases to ensure 100% clinical completeness.
+- **Strict Rate-Limiting & Stability**: Automated cooldown periods are enforced during generation to maintain stability on the Gemini free tier.
+- **Self-Healing Generation**: The script audits every batch's difficulty distribution and case targets. If the AI drifts from the target balance or fails image generation, the system automatically adjusts the next batch's prompt to "heal" the bank's equilibrium and meet daily targets.
 - **Fuzzy Deduplication**: Advanced **SequenceMatcher** analysis prevents near-duplicate questions (e.g., swapping a tooth number) from entering the database.
 - **Post-Generation Validation**: Every question undergoes a strict schema and quality check. Hallucinations or forbidden distractors (like "All of the above") are automatically rejected.
 - **Daily Updates**: Generates **50 new specialist-level cases** every 24 hours, anchored to current IADT and AAE guidelines.
