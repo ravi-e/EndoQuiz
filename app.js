@@ -471,7 +471,8 @@ function showExplanation(q) {
         }
         
         if (q.reference) {
-            DOM.quiz.referenceText.innerHTML = `📚 <strong>Reference:</strong> ${q.reference}`;
+            const searchUrl = `https://duckduckgo.com/?q=!ducky+endodontics+${encodeURIComponent(q.reference)}`;
+            DOM.quiz.referenceText.innerHTML = `📚 <strong>Reference:</strong> <a href="${searchUrl}" target="_blank" style="color: #60a5fa; text-decoration: underline;">${q.reference}</a>`;
             DOM.quiz.referenceText.classList.remove('hidden');
         } else {
             DOM.quiz.referenceText.classList.add('hidden');
@@ -739,7 +740,8 @@ function loadReviewQuestion() {
             DOM.review.pearlContainer.classList.remove('hidden');
         } else { DOM.review.pearlContainer.classList.add('hidden'); }
         if (q.reference) {
-            DOM.review.referenceText.innerHTML = `📚 <strong>Reference:</strong> ${q.reference}`;
+            const searchUrl = `https://duckduckgo.com/?q=!ducky+endodontics+${encodeURIComponent(q.reference)}`;
+            DOM.review.referenceText.innerHTML = `📚 <strong>Reference:</strong> <a href="${searchUrl}" target="_blank" style="color: #60a5fa; text-decoration: underline;">${q.reference}</a>`;
             DOM.review.referenceText.classList.remove('hidden');
         } else { DOM.review.referenceText.classList.add('hidden'); }
     }
