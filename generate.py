@@ -47,13 +47,27 @@ def generate_image_asset(prompt, filename):
         # Add medical styling to ensure professional look
         enhanced_prompt = f"Professional clinical dental diagnostic image. {prompt}. Medical radiology style, monochrome, high contrast, clean background, sharp detail."
 
-        response = client.models.generate_images(
-            model="gemini-3.1-flash-image-preview",
-            prompt=enhanced_prompt,
-            config=types.GenerateImagesConfig(
-                number_of_images=1, include_rai_reason=True
-            ),
-        )
+        max_retries = 5
+        base_delay = 10
+        for attempt in range(max_retries):
+            try:
+                response = client.models.generate_images(
+                    model="gemini-3.1-flash-image-preview",
+                    prompt=enhanced_prompt,
+                    config=types.GenerateImagesConfig(
+                        number_of_images=1, include_rai_reason=True
+                    ),
+                )
+                break
+            except Exception as e:
+                if "503" in str(e) and attempt < max_retries - 1:
+                    sleep_time = base_delay * (2**attempt)
+                    print(
+                        f"  [IMAGE ERROR] 503 Unavailable. Retrying in {sleep_time}s..."
+                    )
+                    time.sleep(sleep_time)
+                else:
+                    raise e
 
         if response.generated_images:
             image_data = response.generated_images[0]
@@ -318,9 +332,25 @@ Field notes:
 """
 
     print("Calling Gemini API...")
-    response = client.models.generate_content(
-        model="gemini-3-flash-preview", contents=prompt
-    )
+    max_retries = 5
+    base_delay = 10
+
+    for attempt in range(max_retries):
+        try:
+            response = client.models.generate_content(
+                model="gemini-3-flash-preview", contents=prompt
+            )
+            break
+        except Exception as e:
+            if "503" in str(e) and attempt < max_retries - 1:
+                sleep_time = base_delay * (2**attempt)
+                print(
+                    f"API 503 Error. Retrying in {sleep_time} seconds (Attempt {attempt+1}/{max_retries})..."
+                )
+                time.sleep(sleep_time)
+            else:
+                print(f"API Request Failed: {e}")
+                return []
 
     response_text = response.text.strip()
 

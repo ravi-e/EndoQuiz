@@ -1,9 +1,16 @@
-const CACHE_NAME = "endoquiz-v20";
+const CACHE_NAME = "endoquiz-v21";
 const ASSETS_TO_CACHE = [
   "./",
   "index.html",
   "styles.css",
-  "app.js",
+  "js/main.js",
+  "js/dom.js",
+  "js/state.js",
+  "js/storage.js",
+  "js/api.js",
+  "js/srs.js",
+  "js/quiz.js",
+  "js/stats.js",
   "questions.json",
   "icon.png",
   "splash.png",
@@ -40,7 +47,7 @@ self.addEventListener("activate", (event) => {
 self.addEventListener("fetch", (event) => {
   const url = new URL(event.request.url);
   const isCoreAsset =
-    url.pathname.endsWith("app.js") ||
+    url.pathname.includes("/js/") ||
     url.pathname.endsWith("index.html") ||
     url.pathname.endsWith("styles.css") ||
     url.pathname.endsWith("questions.json") ||
