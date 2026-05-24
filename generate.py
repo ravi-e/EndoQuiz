@@ -52,7 +52,7 @@ def generate_image_asset(prompt, filename):
         for attempt in range(max_retries):
             try:
                 response = client.models.generate_images(
-                    model="gemini-3.1-flash-image-preview",
+                    model="imagen-3.0-generate-002",
                     prompt=enhanced_prompt,
                     config=types.GenerateImagesConfig(
                         number_of_images=1, include_rai_reason=True
