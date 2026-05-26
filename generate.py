@@ -59,20 +59,31 @@ def generate_image_asset(prompt, filename):
 
         max_retries = 3
         base_delay = 5
+        timeout_val = 45
 
-        # Initialize Hugging Face InferenceClient
+        # Initialize Hugging Face InferenceClient with an explicit timeout to prevent hanging
         hf_client = InferenceClient(
-            model="black-forest-labs/FLUX.1-schnell", token=HF_TOKEN
+            model="black-forest-labs/FLUX.1-schnell",
+            token=HF_TOKEN,
+            timeout=timeout_val,
         )
 
         for attempt in range(max_retries):
             try:
                 # Call HF API
+                start_time = time.time()
+                print(
+                    f"  [IMAGE] Requesting FLUX model via Inference API (Attempt {attempt+1}/{max_retries}, Timeout={timeout_val}s)..."
+                )
+
                 image = hf_client.text_to_image(
                     prompt=enhanced_prompt,
                     width=1024,
                     height=576,  # 16:9 aspect ratio
                 )
+
+                duration = time.time() - start_time
+                print(f"  [IMAGE] Request succeeded in {duration:.2f} seconds.")
 
                 # Save the PIL image to disk
                 file_path = os.path.join(IMAGE_DIR, os.path.basename(filename))
@@ -81,8 +92,13 @@ def generate_image_asset(prompt, filename):
                 return True
 
             except Exception as e:
+                duration = time.time() - start_time
                 err_str = str(e)
-                # Check for rate limit (429) or overloaded server (503)
+                print(
+                    f"  [IMAGE ERROR] Request failed after {duration:.2f} seconds with error: {err_str}"
+                )
+
+                # Check for rate limit (429), overloaded server (503), or timeout
                 is_rate_limit = (
                     "429" in err_str
                     or "rate limit" in err_str.lower()
@@ -94,11 +110,16 @@ def generate_image_asset(prompt, filename):
                     or "loading" in err_str.lower()
                     or "temporarily unavailable" in err_str.lower()
                 )
+                is_timeout = (
+                    "timeout" in err_str.lower() or "timed out" in err_str.lower()
+                )
 
-                if (is_rate_limit or is_overloaded) and attempt < max_retries - 1:
+                if (
+                    is_rate_limit or is_overloaded or is_timeout
+                ) and attempt < max_retries - 1:
                     sleep_time = base_delay * (2**attempt)
                     print(
-                        f"  [IMAGE ERROR] HF Server Busy/Rate-Limited. Retrying in {sleep_time}s (Attempt {attempt+1}/{max_retries})..."
+                        f"  [IMAGE ERROR] HF Server Busy/Rate-Limited/Timed-Out. Retrying in {sleep_time}s (Attempt {attempt+1}/{max_retries})..."
                     )
                     time.sleep(sleep_time)
                 else:
