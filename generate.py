@@ -2,7 +2,6 @@ import os
 import json
 import time
 from google import genai
-from google.genai import types
 from collections import Counter
 from difflib import SequenceMatcher
 
@@ -14,7 +13,6 @@ if API_KEY:
 
 QUESTIONS_FILE = "questions.json"
 IMAGE_DIR = "images"
-DISABLE_IMAGE_GEN = False
 
 if not os.path.exists(IMAGE_DIR):
     os.makedirs(IMAGE_DIR)
@@ -37,11 +35,10 @@ def save_questions(questions):
 
 def generate_image_asset(prompt, filename):
     """
-    Calls Imagen 3 to generate a clinical diagnostic image.
+    Calls Gemini 3.1 Flash Image model to generate a clinical diagnostic image.
     Saves the image to the local images directory.
     """
-    global DISABLE_IMAGE_GEN
-    if not client or DISABLE_IMAGE_GEN:
+    if not client:
         return False
 
     try:
@@ -53,12 +50,9 @@ def generate_image_asset(prompt, filename):
         base_delay = 10
         for attempt in range(max_retries):
             try:
-                response = client.models.generate_images(
-                    model="imagen-4.0-generate-001",
-                    prompt=enhanced_prompt,
-                    config=types.GenerateImagesConfig(
-                        number_of_images=1, include_rai_reason=True
-                    ),
+                response = client.models.generate_content(
+                    model="gemini-3.1-flash-image-preview",
+                    contents=[enhanced_prompt],
                 )
                 break
             except Exception as e:
@@ -71,25 +65,24 @@ def generate_image_asset(prompt, filename):
                 else:
                     raise e
 
-        if response.generated_images:
-            image_data = response.generated_images[0]
+        image_data = None
+        if response.candidates and response.candidates[0].content:
+            for part in response.candidates[0].content.parts:
+                if part.inline_data and part.inline_data.data:
+                    image_data = part.inline_data.data
+                    break
+
+        if image_data:
             file_path = os.path.join(IMAGE_DIR, os.path.basename(filename))
-            image_data.image.save(file_path)
+            with open(file_path, "wb") as f:
+                f.write(image_data)
             print(f"  [IMAGE] Saved to {file_path}")
             return True
-        return False
+        else:
+            print("  [IMAGE ERROR] No inline image data found in response.")
+            return False
     except Exception as e:
         print(f"  [IMAGE ERROR] Failed to generate {filename}: {e}")
-        err_msg = str(e).lower()
-        if (
-            "paid plans" in err_msg
-            or "billing" in err_msg
-            or "upgrade your account" in err_msg
-        ):
-            print(
-                "  [SYSTEM ALERT] Paid plan requirement detected. Disabling future image generations."
-            )
-            DISABLE_IMAGE_GEN = True
         return False
 
 
@@ -197,7 +190,6 @@ def audit_tiers(questions, target_dist=None):
 
 
 def generate_new_questions(existing_questions, target_dist=None):
-    global DISABLE_IMAGE_GEN
     if not client:
         print("Error: GEMINI_API_KEY environment variable not set.")
         return []
@@ -210,15 +202,6 @@ def generate_new_questions(existing_questions, target_dist=None):
 
     # Format target distribution for prompt
     dist_str = f"{target_dist.get(1,0)} × Tier 1, {target_dist.get(2,0)} × Tier 2, {target_dist.get(3,0)} × Tier 3, {target_dist.get(4,0)} × Tier 4"
-
-    if DISABLE_IMAGE_GEN:
-        image_support_prompt = """- IMAGE SUPPORT: DO NOT generate any questions with images. All questions must be 100% text-only. Do not include the "image" or "imageAlt" fields in the JSON response under any circumstances."""
-    else:
-        image_support_prompt = """- IMAGE SUPPORT: For CBCT, Trauma, and Resorption questions, determine if the clinical scenario absolutely warrants an image based on Prometric exam patterns.
-  - Aim for a healthy mix where about 10-20% of questions in these categories have images.
-  - If an image is warranted, you MUST provide an "image" field with a descriptive path: "images/case_[TIMESTAMP]_[RANDOM].jpg"
-  - The question stem must explicitly refer to the image (e.g., "Based on the provided CBCT slice...").
-  - Always provide an "imageAlt" description."""
 
     prompt = f"""
 You are an expert Endodontist examiner writing questions for the Middle East Prometric Specialist Exams.
@@ -288,7 +271,11 @@ CLINICAL VIGNETTE RULES (Tier 2-4):
 - Trauma questions MUST anchor to IADT 2020 guidelines
 - Irrigation/obturation questions MUST anchor to current AAE/ESE position statements
 - Systemic conditions must directly affect the management decision — do not include irrelevant medical history
-- {image_support_prompt}
+- IMAGE SUPPORT: For CBCT, Trauma, and Resorption questions, determine if the clinical scenario absolutely warrants an image based on Prometric exam patterns.
+  - Aim for a healthy mix where about 10-20% of questions in these categories have images.
+  - If an image is warranted, you MUST provide an "image" field with a descriptive path: "images/case_[TIMESTAMP]_[RANDOM].jpg"
+  - The question stem must explicitly refer to the image (e.g., "Based on the provided CBCT slice...").
+  - Always provide an "imageAlt" description.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 DISTRACTOR QUALITY RULES — apply all of the following:
@@ -443,20 +430,9 @@ def main():
                             # Conservative cooldown for image generation safety
                             time.sleep(20)
                         else:
-                            if DISABLE_IMAGE_GEN:
-                                print(
-                                    "  [SYSTEM NOTE] Saving question as text-only since image generation is unavailable."
-                                )
-                                # Strip image fields so the app handles it as a standard text question
-                                q.pop("image", None)
-                                q.pop("imageAlt", None)
-                                valid_questions.append(q)
-                                existing_questions.append(q)
-                                accumulated_dist[q.get("tier")] += 1
-                            else:
-                                print(
-                                    "  [SKIPPED] Question rejected because image generation failed."
-                                )
+                            print(
+                                "  [SKIPPED] Question rejected because image generation failed."
+                            )
                     else:
                         # Text-only question
                         valid_questions.append(q)

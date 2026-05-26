@@ -19,7 +19,7 @@ The app features a modern, glassmorphism UI, an advanced **Spaced Repetition Sys
 
 ## 🤖 Automated AI Pipeline
 
-The project features a robust, self-maintaining intelligence layer powered by **GitHub Actions** and the Gemini API (including `imagen-4.0-generate-001` for visual assets).
+The project features a robust, self-maintaining intelligence layer powered by **GitHub Actions** and the Gemini API (including `gemini-3.1-flash-image-preview` for visual assets).
 
 - **Automated Clinical Image Generation**: An autonomous pipeline evaluates clinical scenarios and generates visual diagnostic assets only when medically warranted (e.g., complex CBCTs or trauma cases), mirroring the realistic frequency of Prometric board exams. It includes an atomic "all-or-nothing" validation flow for these specific cases to ensure 100% clinical completeness.
 - **Strict Rate-Limiting & Stability**: Automated cooldown periods are enforced during generation to maintain stability on the Gemini free tier.
