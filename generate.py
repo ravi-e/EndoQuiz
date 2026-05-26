@@ -4,12 +4,22 @@ import time
 from google import genai
 from collections import Counter
 from difflib import SequenceMatcher
+from huggingface_hub import InferenceClient
 
 # Configure Gemini API
 API_KEY = os.environ.get("GEMINI_API_KEY")
 client = None
 if API_KEY:
     client = genai.Client(api_key=API_KEY)
+
+# Configure Hugging Face API
+HF_TOKEN = os.environ.get("HF_TOKEN")
+DISABLE_IMAGE_GEN = False
+if not HF_TOKEN:
+    print(
+        "[SYSTEM ALERT] HF_TOKEN is not configured. Visual asset generation will be disabled."
+    )
+    DISABLE_IMAGE_GEN = True
 
 QUESTIONS_FILE = "questions.json"
 IMAGE_DIR = "images"
@@ -35,10 +45,11 @@ def save_questions(questions):
 
 def generate_image_asset(prompt, filename):
     """
-    Calls Gemini 3.1 Flash Image model to generate a clinical diagnostic image.
+    Calls Hugging Face Serverless API with FLUX.1-schnell to generate a clinical diagnostic image.
     Saves the image to the local images directory.
     """
-    if not client:
+    global DISABLE_IMAGE_GEN
+    if not HF_TOKEN or DISABLE_IMAGE_GEN:
         return False
 
     try:
@@ -46,43 +57,67 @@ def generate_image_asset(prompt, filename):
         # Add medical styling to ensure professional look
         enhanced_prompt = f"Professional clinical dental diagnostic image. {prompt}. Medical radiology style, monochrome, high contrast, clean background, sharp detail."
 
-        max_retries = 5
-        base_delay = 10
+        max_retries = 3
+        base_delay = 5
+
+        # Initialize Hugging Face InferenceClient
+        hf_client = InferenceClient(
+            model="black-forest-labs/FLUX.1-schnell", token=HF_TOKEN
+        )
+
         for attempt in range(max_retries):
             try:
-                response = client.models.generate_content(
-                    model="gemini-3.1-flash-image-preview",
-                    contents=[enhanced_prompt],
+                # Call HF API
+                image = hf_client.text_to_image(
+                    prompt=enhanced_prompt,
+                    width=1024,
+                    height=576,  # 16:9 aspect ratio
                 )
-                break
+
+                # Save the PIL image to disk
+                file_path = os.path.join(IMAGE_DIR, os.path.basename(filename))
+                image.save(file_path)
+                print(f"  [IMAGE] Saved to {file_path}")
+                return True
+
             except Exception as e:
-                if "503" in str(e) and attempt < max_retries - 1:
+                err_str = str(e)
+                # Check for rate limit (429) or overloaded server (503)
+                is_rate_limit = (
+                    "429" in err_str
+                    or "rate limit" in err_str.lower()
+                    or "too many requests" in err_str.lower()
+                )
+                is_overloaded = (
+                    "503" in err_str
+                    or "overloaded" in err_str.lower()
+                    or "loading" in err_str.lower()
+                    or "temporarily unavailable" in err_str.lower()
+                )
+
+                if (is_rate_limit or is_overloaded) and attempt < max_retries - 1:
                     sleep_time = base_delay * (2**attempt)
                     print(
-                        f"  [IMAGE ERROR] 503 Unavailable. Retrying in {sleep_time}s..."
+                        f"  [IMAGE ERROR] HF Server Busy/Rate-Limited. Retrying in {sleep_time}s (Attempt {attempt+1}/{max_retries})..."
                     )
                     time.sleep(sleep_time)
                 else:
+                    # Check if it's an authorization/token error
+                    if (
+                        "401" in err_str
+                        or "unauthorized" in err_str.lower()
+                        or "invalid token" in err_str.lower()
+                        or "403" in err_str
+                    ):
+                        print(
+                            "  [SYSTEM ALERT] Hugging Face Token invalid or unauthorized. Disabling image generation."
+                        )
+                        DISABLE_IMAGE_GEN = True
                     raise e
 
-        image_data = None
-        if response.candidates and response.candidates[0].content:
-            for part in response.candidates[0].content.parts:
-                if part.inline_data and part.inline_data.data:
-                    image_data = part.inline_data.data
-                    break
-
-        if image_data:
-            file_path = os.path.join(IMAGE_DIR, os.path.basename(filename))
-            with open(file_path, "wb") as f:
-                f.write(image_data)
-            print(f"  [IMAGE] Saved to {file_path}")
-            return True
-        else:
-            print("  [IMAGE ERROR] No inline image data found in response.")
-            return False
+        return False
     except Exception as e:
-        print(f"  [IMAGE ERROR] Failed to generate {filename}: {e}")
+        print(f"  [IMAGE ERROR] Failed to generate {filename} via Hugging Face: {e}")
         return False
 
 
@@ -190,6 +225,7 @@ def audit_tiers(questions, target_dist=None):
 
 
 def generate_new_questions(existing_questions, target_dist=None):
+    global DISABLE_IMAGE_GEN
     if not client:
         print("Error: GEMINI_API_KEY environment variable not set.")
         return []
@@ -202,6 +238,15 @@ def generate_new_questions(existing_questions, target_dist=None):
 
     # Format target distribution for prompt
     dist_str = f"{target_dist.get(1,0)} × Tier 1, {target_dist.get(2,0)} × Tier 2, {target_dist.get(3,0)} × Tier 3, {target_dist.get(4,0)} × Tier 4"
+
+    if DISABLE_IMAGE_GEN:
+        image_support_prompt = """- IMAGE SUPPORT: DO NOT generate any questions with images. All questions must be 100% text-only. Do not include the "image" or "imageAlt" fields in the JSON response under any circumstances."""
+    else:
+        image_support_prompt = """- IMAGE SUPPORT: For CBCT, Trauma, and Resorption questions, determine if the clinical scenario absolutely warrants an image based on Prometric exam patterns.
+  - Aim for a healthy mix where about 10-20% of questions in these categories have images.
+  - If an image is warranted, you MUST provide an "image" field with a descriptive path: "images/case_[TIMESTAMP]_[RANDOM].jpg"
+  - The question stem must explicitly refer to the image (e.g., "Based on the provided CBCT slice...").
+  - Always provide an "imageAlt" description."""
 
     prompt = f"""
 You are an expert Endodontist examiner writing questions for the Middle East Prometric Specialist Exams.
@@ -271,11 +316,7 @@ CLINICAL VIGNETTE RULES (Tier 2-4):
 - Trauma questions MUST anchor to IADT 2020 guidelines
 - Irrigation/obturation questions MUST anchor to current AAE/ESE position statements
 - Systemic conditions must directly affect the management decision — do not include irrelevant medical history
-- IMAGE SUPPORT: For CBCT, Trauma, and Resorption questions, determine if the clinical scenario absolutely warrants an image based on Prometric exam patterns.
-  - Aim for a healthy mix where about 10-20% of questions in these categories have images.
-  - If an image is warranted, you MUST provide an "image" field with a descriptive path: "images/case_[TIMESTAMP]_[RANDOM].jpg"
-  - The question stem must explicitly refer to the image (e.g., "Based on the provided CBCT slice...").
-  - Always provide an "imageAlt" description.
+- {image_support_prompt}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 DISTRACTOR QUALITY RULES — apply all of the following:
@@ -427,12 +468,23 @@ def main():
                             valid_questions.append(q)
                             existing_questions.append(q)
                             accumulated_dist[q.get("tier")] += 1
-                            # Conservative cooldown for image generation safety
-                            time.sleep(20)
+                            # Respect Hugging Face rate limits with 7s throttling sleep
+                            print("  [IMAGE] Throttling for 7 seconds...")
+                            time.sleep(7)
                         else:
-                            print(
-                                "  [SKIPPED] Question rejected because image generation failed."
-                            )
+                            if DISABLE_IMAGE_GEN:
+                                print(
+                                    "  [SYSTEM NOTE] Saving question as text-only since image generation is unavailable."
+                                )
+                                q.pop("image", None)
+                                q.pop("imageAlt", None)
+                                valid_questions.append(q)
+                                existing_questions.append(q)
+                                accumulated_dist[q.get("tier")] += 1
+                            else:
+                                print(
+                                    "  [SKIPPED] Question rejected because image generation failed."
+                                )
                     else:
                         # Text-only question
                         valid_questions.append(q)
