@@ -8,10 +8,15 @@ The app features a modern, glassmorphism UI, an advanced **Spaced Repetition Sys
 
 - **Spaced Repetition System (SRS)**: Integrated **SM-2 algorithm** that tracks your mastery. Correct answers push reviews further out, while mistakes trigger a review tomorrow, ensuring optimal long-term retention.
 - **Advanced Performance Analytics**: Deep diagnostic tracking including a **2x2 Cognitive Tier Grid** (Recall to Expert Synthesis) and **Per-Domain Accuracy Charts** with a 65% mastery threshold.
+- **Weak Spot Targeted Drills**: Automatically flags domains where your performance falls below the 65% mastery threshold (after a minimum of 3 attempts) and provides direct study drills for targeted practice.
+- **Save to Favorites / Bookmarking**: Flag challenging questions to review them later in a dedicated Favorites Review session.
+- **Configurable Quiz Timer**: Toggleable 60-second time limit per question with an interactive progress bar and warning states when time runs low.
+- **Post-Quiz Error Review**: Seamlessly navigate through incorrect answers, detailed explanations, and key takeaways at the end of a quiz.
+- **Database Stats Dashboard**: Provides a visual breakdown of the total questions and distribution of topics in the offline knowledge bank.
 - **Clinical Image Support**: High-fidelity radiographic, CBCT, and clinical photo support with **tap-to-zoom** functionality for detailed diagnostic inspection.
 - **Unanswered Question Guard**: Prevents accidental skips and data inflation. Includes a shake-animation and tooltip guard to ensure every session counts toward your score.
 - **Mastery Guide**: An on-device interactive manual explaining core app mechanics and specialist exam-prep strategies.
-- **Offline Background Sync**: PWA v20 utilizes a **Network-First** strategy for core assets (`app.js`, `styles.css`, `questions.json`), guaranteeing you always see the latest UI fixes when online while maintaining robust offline access.
+- **Offline Background Sync**: PWA v21 utilizes a **Network-First** strategy for core assets (`js/main.js`, `styles.css`, `questions.json`), guaranteeing you always see the latest UI fixes when online while maintaining robust offline access.
 - **Interactive Source References**: Every question includes a clickable, authoritative source link, enabling instant verification of clinical data against primary literature and building trust in the study material.
 - **Optimized UI/UX**: Features a highly interactive split-card quiz UI with a prominent header-based exit button and distinct emoji-labeled clinical data for a seamless study experience.
 - **Split-Card Feedback**: Contextual reasoning injected directly beneath your selected option, providing immediate, scroll-free learning.
