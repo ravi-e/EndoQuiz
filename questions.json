@@ -37033,5 +37033,695 @@
     "explanation": "CORRECT: RCT is the preferred treatment over extraction for patients at risk for MRONJ; avoiding apical over-instrumentation reduces the risk of bone involvement. INCORRECT: A - Extraction significantly increases the risk of MRONJ compared to RCT; C - There is no reason to postpone the final RCT; D - Ridge preservation is related to extraction. CLINICAL PEARL: In patients on bone-modifying agents, 'Save the Tooth' should always be the priority to avoid the risk of MRONJ associated with extractions. REFERENCE: AAOMS Position Paper 2014",
     "clinicalPearl": "Root canal treatment is the safest way to manage a necrotic tooth in a patient on bisphosphonates; extraction should be avoided at all costs to prevent MRONJ.",
     "reference": "AAOMS Position Paper 2014"
+  },
+  {
+    "question": "Which concentration of Sodium Hypochlorite (NaOCl) is most frequently recommended by the American Association of Endodontists to balance the clinical objectives of maximal tissue dissolution and effective antimicrobial action against established endodontic biofilms?",
+    "options": [
+      "0.5% concentration",
+      "2.0% concentration",
+      "5.25% concentration",
+      "8.25% concentration"
+    ],
+    "correctAnswer": 2,
+    "category": "Irrigation & Obturation Protocols",
+    "tier": 1,
+    "explanation": "CORRECT: 5.25% NaOCl is the gold standard for dissolving organic pulp remnants and eradicating E. faecalis biofilms, balancing efficiency with safety when used with side-vented needles. INCORRECT: A - 0.5% (Dakins solution) is too weak for rapid tissue dissolution; B - 2.0% is used by some but is less effective than 5.25% against mature biofilms; D - 8.25% is commercially available as household bleach but increases the risk of severe tissue damage during accidents without proportional clinical benefit. CLINICAL PEARL: Sodium hypochlorite is the only common endodontic irrigant capable of dissolving organic matter; heating 2.5% NaOCl can make it as effective as 5.25% at room temperature. REFERENCE: AAE Position Statement on Irrigation (2011)",
+    "clinicalPearl": "Sodium hypochlorite is the only common endodontic irrigant capable of dissolving organic matter.",
+    "reference": "AAE Position Statement on Irrigation (2011)"
+  },
+  {
+    "question": "Which of the following pharmacological agents is the primary mediator responsible for the localized vasodilation and increased vascular permeability seen in the dental pulp during the early stages of neurogenic inflammation?",
+    "options": [
+      "Substance P",
+      "Epinephrine",
+      "Fentanyl",
+      "Ibuprofen"
+    ],
+    "correctAnswer": 0,
+    "category": "Pulp Biology & Pulp Testing",
+    "tier": 1,
+    "explanation": "CORRECT: Substance P is a neuropeptide released from C-fibers that causes potent vasodilation and plasma extravasation. INCORRECT: A - Epinephrine is a vasoconstrictor; B - Fentanyl is a systemic opioid; D - Ibuprofen is a COX inhibitor that reduces prostaglandin synthesis, not a primary neuropeptide. CLINICAL PEARL: Substance P release explains why pulpitis pain can be throbbing and synchronized with the pulse due to increased intrapulpal pressure. REFERENCE: Hargreaves & Goodis (Seltzer and Bender's Dental Pulp)",
+    "clinicalPearl": "Substance P release explains why pulpitis pain can be throbbing and synchronized with the pulse.",
+    "reference": "Hargreaves & Goodis (Seltzer and Bender's Dental Pulp)"
+  },
+  {
+    "question": "A 24-year-old female presents 45 minutes after an accident where tooth 11 was completely avulsed. The tooth was stored in a container of cold milk. The patient is healthy and the tooth appears clean with an intact root. The apex is closed. According to IADT 2020 guidelines, what is the most appropriate management of the root surface before replantation?",
+    "options": [
+      "Scrub the root with a chlorhexidine-soaked sponge",
+      "Rinse the root gently with saline or the storage medium",
+      "Soak the root in 2.4% sodium fluoride for 20 minutes",
+      "Perform root canal treatment extra-orally before replantation"
+    ],
+    "correctAnswer": 1,
+    "category": "Trauma Management (IADT 2020 guidelines)",
+    "tier": 2,
+    "explanation": "CORRECT: For a tooth with a closed apex and extra-oral dry time <60 mins, the root should be rinsed gently to remove debris while preserving PDL cells. INCORRECT: A - Scrubbing damages viable PDL cells and leads to replacement resorption; C - Fluoride is only indicated for teeth with dry times >60 mins to delay inevitable ankylosis; D - For short dry times, RCT should be done 7-10 days post-replantation. CLINICAL PEARL: Preservation of the PDL is the single most important factor for the prognosis of a replanted tooth. REFERENCE: IADT 2020 Guidelines",
+    "clinicalPearl": "Preservation of the PDL is the single most important factor for the prognosis of a replanted tooth.",
+    "reference": "IADT 2020 Guidelines"
+  },
+  {
+    "question": "A 42-year-old male presents with persistent discomfort following endodontic treatment of tooth 26 six months ago. A small-volume CBCT is obtained. On the axial view at the level of the coronal third of the mesiobuccal root, a distinct untreated canal space is visible 2mm lingual to the obturated MB1 canal. What is the most appropriate interpretation of this finding?",
+    "options": [
+      "A vertical root fracture is present on the lingual aspect",
+      "The MB2 canal was missed during the initial treatment",
+      "Beam hardening artifact from the GP is mimicking a canal",
+      "A strip perforation has occurred during MB1 instrumentation"
+    ],
+    "correctAnswer": 1,
+    "category": "CBCT Interpretation",
+    "tier": 2,
+    "explanation": "CORRECT: The description is classic for a missed MB2 canal, which is typically located lingual to the MB1-Palatal line. INCORRECT: A - Fractures typically appear as radiolucent lines crossing the root, not as internal canal spaces; C - Beam hardening usually creates dark streaks between dense objects, not discrete round canal shapes; D - Perforations involve the root periphery, not an internal canal space. CLINICAL PEARL: MB2 canals are present in over 90% of maxillary first molars and are a leading cause of post-treatment disease. REFERENCE: AAE/AAOMR Joint Position Statement on CBCT (2015)",
+    "clinicalPearl": "MB2 canals are present in over 90% of maxillary first molars and are a leading cause of post-treatment disease.",
+    "reference": "AAE/AAOMR Joint Position Statement on CBCT (2015)"
+  },
+  {
+    "question": "A 55-year-old male presents with severe, spontaneous pain on tooth 46. The tooth is extremely sensitive to percussion and the patient reports it feels 'high' when biting. Vitality testing shows a lingering response to cold for 30 seconds. Radiographs reveal a widened PDL space but no periapical radiolucency. According to AAE Diagnostic Terminology, what is the most likely diagnosis?",
+    "options": [
+      "Symptomatic Irreversible Pulpitis and Normal Apical Tissues",
+      "Symptomatic Irreversible Pulpitis and Symptomatic Apical Periodontitis",
+      "Pulp Necrosis and Symptomatic Apical Periodontitis",
+      "Symptomatic Reversible Pulpitis and Asymptomatic Apical Periodontitis"
+    ],
+    "correctAnswer": 1,
+    "category": "Complex Diagnosis & AAE Classification",
+    "tier": 2,
+    "explanation": "CORRECT: Lingering cold pain indicates Irreversible Pulpitis; percussion sensitivity and widened PDL indicate Symptomatic Apical Periodontitis. INCORRECT: A - Percussion sensitivity and widened PDL preclude 'Normal Apical Tissues'; C - Vitality to cold precludes 'Pulp Necrosis'; D - Lingering pain precludes 'Reversible Pulpitis'. CLINICAL PEARL: Apical periodontitis can occur even when the pulp is still vital (though inflamed), particularly in multi-rooted teeth. REFERENCE: AAE Diagnostic Terminology (2009)",
+    "clinicalPearl": "Apical periodontitis can occur even when the pulp is still vital (though inflamed), particularly in multi-rooted teeth.",
+    "reference": "AAE Diagnostic Terminology (2009)"
+  },
+  {
+    "question": "A 48-year-old female presents with localized 9mm probing on the mid-buccal of tooth 36. The tooth has no history of trauma or restorations. Cold and EPT testing are negative. Radiographs show a narrow radiolucency extending from the gingival sulcus to the apex of the mesial root. Following the Simon classification, what is the primary management sequence?",
+    "options": [
+      "Scaling and root planing, then wait 3 months for RCT",
+      "Immediate extraction and placement of a dental implant",
+      "Endodontic treatment first, followed by periodontal re-evaluation",
+      "Simultaneous endodontic and periodontal surgery with bone graft"
+    ],
+    "correctAnswer": 2,
+    "category": "Endo-Perio Lesions",
+    "tier": 2,
+    "explanation": "CORRECT: For a 'Primary Endodontic with Secondary Periodontal' lesion, RCT should be performed first as the periodontal pocket may heal or improve significantly once the endodontic source is removed. INCORRECT: A - SRP before RCT can drive bacteria into the canal or damage attachment that might otherwise regenerate; B - Extraction is premature; D - Periodontal surgery should be delayed until the endodontic outcome is assessed. CLINICAL PEARL: True endodontic lesions that mimic periodontal pockets usually have a very narrow, localized probing depth rather than generalized bone loss. REFERENCE: Simon, Glick, and Frank (1972)",
+    "clinicalPearl": "True endodontic lesions that mimic periodontal pockets usually have a very narrow, localized probing depth.",
+    "reference": "Simon, Glick, and Frank (1972)"
+  },
+  {
+    "question": "A 35-year-old male presents with an incidental finding on tooth 21. A small, irregular radiolucency is noted at the mesial cervical margin just above the crestal bone. CBCT shows the lesion has penetrated into the dentin but has not reached the pulp. The tooth is asymptomatic and vital. According to the Heithersay classification, what is the diagnosis and appropriate management?",
+    "options": [
+      "Class 1 External Cervical Resorption; Surgical repair",
+      "Class 2 External Cervical Resorption; Surgical repair",
+      "Class 3 External Cervical Resorption; Endodontic treatment and repair",
+      "Class 4 External Cervical Resorption; Extraction and implant"
+    ],
+    "correctAnswer": 1,
+    "category": "Resorption (internal, external, cervical — Heithersay classification)",
+    "tier": 2,
+    "explanation": "CORRECT: Heithersay Class 2 lesions are well-defined and penetrate close to the pulp but do not extend into the radicular dentin significantly. Surgical repair is often successful. INCORRECT: A - Class 1 is shallow and small; C - Class 3 extends into the coronal third of the root; D - Class 4 involves the middle third of the root or further. CLINICAL PEARL: TCA (Trichloroacetic acid) 90% is often used topically during the surgical repair of ECR to coagulate the resorptive tissue. REFERENCE: Heithersay (1999)",
+    "clinicalPearl": "TCA (Trichloroacetic acid) 90% is often used topically during the surgical repair of ECR to coagulate the resorptive tissue.",
+    "reference": "Heithersay (1999)"
+  },
+  {
+    "question": "A 10-year-old male presents with a deep carious lesion on the permanent tooth 46. The tooth is asymptomatic and vital to cold. During caries removal under rubber dam, a 2mm pulp exposure occurs in a field free of debris. The clinician decides to perform a partial pulpotomy (Cvek technique). Which material and depth are most appropriate for this procedure?",
+    "options": [
+      "Calcium Hydroxide powder placed directly on the exposure",
+      "Biodentine placed after 2mm of pulp tissue removal",
+      "Glass Ionomer Cement placed after 5mm of pulp removal",
+      "MTA placed after complete removal of the coronal pulp"
+    ],
+    "correctAnswer": 1,
+    "category": "Vital Pulp Therapy",
+    "tier": 2,
+    "explanation": "CORRECT: Cvek pulpotomy involves removing 2-3 mm of inflamed pulp tissue and placing a bioceramic like Biodentine or MTA. INCORRECT: A - Ca(OH)2 is acceptable but bioceramics show better long-term sealing and success; C - Glass ionomer is not a direct pulp capping material; D - Complete pulpotomy is not necessary if the exposure is small and fresh. CLINICAL PEARL: The goal of Cvek pulpotomy is to remove only the superficially inflamed tissue to allow for continued apexogenesis. REFERENCE: Cvek (1978)",
+    "clinicalPearl": "The goal of Cvek pulpotomy is to remove only the superficially inflamed tissue to allow for continued apexogenesis.",
+    "reference": "Cvek (1978)"
+  },
+  {
+    "question": "During apical microsurgery on tooth 11, the clinician performs a root-end resection. According to modern surgical principles, which combination of resection length and bevel angle is most effective at removing the majority of lateral canals while minimizing dentinal tubule exposure?",
+    "options": [
+      "1 mm resection with a 45-degree bevel",
+      "3 mm resection with a 0-degree bevel",
+      "5 mm resection with a 30-degree bevel",
+      "2 mm resection with a 15-degree bevel"
+    ],
+    "correctAnswer": 1,
+    "category": "Surgical Endodontics",
+    "tier": 2,
+    "explanation": "CORRECT: A 3mm resection removes 98% of apical ramifications and 93% of lateral canals. A 0-degree (perpendicular) bevel minimizes the surface area of exposed tubules and reduces the risk of leakage. INCORRECT: A - 1mm is insufficient to remove ramifications; C - 5mm is excessive and compromises the crown-root ratio; D - While common, any bevel >0 degrees is less ideal than a flat resection. CLINICAL PEARL: Reducing the bevel angle reduces the risk of missing lingual anatomy and decreases the apical seal's susceptibility to leakage. REFERENCE: Kim & Kratchman (2006)",
+    "clinicalPearl": "A 3mm resection removes 98% of apical ramifications and 93% of lateral canals.",
+    "reference": "Kim & Kratchman (2006)"
+  },
+  {
+    "question": "A specialist endodontist in the Middle East discovers a separated instrument in the MB canal of tooth 46 that was not mentioned in the referral notes or by the patient. The instrument is bypassed but cannot be removed. What is the most legally and ethically sound action regarding the patient's right to information?",
+    "options": [
+      "Do not inform the patient to avoid unnecessary anxiety",
+      "Inform the patient only if the final treatment fails",
+      "Inform the patient immediately and document it in the records",
+      "Advise the patient to sue the referring dentist for malpractice"
+    ],
+    "correctAnswer": 2,
+    "category": "Ethics & Jurisprudence",
+    "tier": 2,
+    "explanation": "CORRECT: Full disclosure of clinical findings, including mishaps (even those caused by others), is required for informed consent and ethical practice. INCORRECT: A - This violates the principle of patient autonomy; B - This is deceptive and increases legal liability; D - This is unprofessional and inflammatory. CLINICAL PEARL: Transparency regarding complications often builds more trust than concealment and is a key defense against litigation. REFERENCE: AAE Code of Ethics",
+    "clinicalPearl": "Transparency regarding complications often builds more trust than concealment.",
+    "reference": "AAE Code of Ethics"
+  },
+  {
+    "question": "During the instrumentation of tooth 11, a patient experiences sudden, severe pain followed by rapid edema and ecchymosis of the labial mucosa. Profuse bleeding from the canal is noted. What is the most appropriate immediate sequence of management?",
+    "options": [
+      "Apply heat packs and prescribe oral antibiotics immediately",
+      "Irrigate with 2% chlorhexidine and close the tooth with GP",
+      "Irrigate with saline, apply cold compresses, and provide analgesics",
+      "Perform an immediate surgical incision and drainage of the area"
+    ],
+    "correctAnswer": 2,
+    "category": "Irrigation & Obturation Protocols",
+    "tier": 2,
+    "explanation": "CORRECT: This is a sodium hypochlorite accident. Immediate management includes neutralizing the irrigant with saline, cold packs (to reduce swelling in the first 24h), and pain control. INCORRECT: A - Heat packs should only be used after 24 hours to increase circulation; B - Chlorhexidine doesn't neutralize the chemical burn; D - Incision is contraindicated unless a secondary infection develops. CLINICAL PEARL: For NaOCl accidents, cold packs are for the first 24 hours, followed by warm packs after 24 hours. REFERENCE: Gluskin (2020)",
+    "clinicalPearl": "For NaOCl accidents, cold packs are for the first 24 hours, followed by warm packs after 24 hours.",
+    "reference": "Gluskin (2020)"
+  },
+  {
+    "question": "A 32-year-old female presents with a separated 4mm NiTi fragment in the apical third of the mesiolingual canal of tooth 36. The fragment is located around a 30-degree curvature. The tooth is asymptomatic, and the pulp was vital at the start of treatment. What is the most evidence-based management strategy?",
+    "options": [
+      "Persist with ultrasonic removal until the fragment is retrieved",
+      "Bypass the fragment, incorporate it into the fill, and monitor",
+      "Refer for immediate apical microsurgery to remove the tip",
+      "Extract the tooth and replace it with a dental implant"
+    ],
+    "correctAnswer": 1,
+    "category": "Endodontic Mishaps (separated instruments, perforations, ledges)",
+    "tier": 2,
+    "explanation": "CORRECT: In vital cases where the fragment is beyond a curve, bypassing is safer than aggressive removal, which may lead to perforation. Prognosis remains high if the fragment is bypassed. INCORRECT: A - Aggressive ultrasonic use beyond a curve often leads to root thinning or perforation; C - Surgery is only indicated if a lesion develops or persists; D - Extraction is overly aggressive for a vital tooth with a separated instrument. CLINICAL PEARL: The prognosis of a separated instrument depends more on the preoperative status of the pulp (vital vs. necrotic) than on the presence of the fragment itself. REFERENCE: Madarati et al. (2013)",
+    "clinicalPearl": "The prognosis of a separated instrument depends more on the preoperative status of the pulp.",
+    "reference": "Madarati et al. (2013)"
+  },
+  {
+    "question": "A 65-year-old male presents with tooth 11 appearing yellowed compared to adjacent teeth. There is no history of pain, but a history of trauma 20 years ago. The tooth is non-responsive to cold and EPT. Radiographs show nearly total obliteration of the pulp canal space and no periapical radiolucency. What is the most appropriate management according to current endodontic standards?",
+    "options": [
+      "Initiate RCT immediately to prevent apical periodontitis",
+      "Perform internal bleaching to address the discoloration",
+      "Periodic monitoring unless symptoms or radiolucency develop",
+      "Surgical endodontics to create an apical seal"
+    ],
+    "correctAnswer": 2,
+    "category": "Complex Diagnosis & AAE Classification",
+    "tier": 3,
+    "explanation": "CORRECT: Calcific Metamorphosis (CM) causes a yellow discoloration. If no symptoms or apical pathology are present, RCT is not indicated despite the lack of response to vitality tests. INCORRECT: A - RCT is not indicated in asymptomatic CM cases as only ~7-15% develop pathology; B - Internal bleaching requires RCT first, which isn't indicated; D - Surgery is unnecessary. CLINICAL PEARL: In cases of calcific metamorphosis, a negative response to EPT/Cold is common and does not necessarily indicate pulp necrosis. REFERENCE: McCabe & Dummer (2012)",
+    "clinicalPearl": "In cases of calcific metamorphosis, a negative response to EPT/Cold is common and does not necessarily indicate pulp necrosis.",
+    "reference": "McCabe & Dummer (2012)"
+  },
+  {
+    "question": "An 11-year-old patient presents 1 hour after tooth 11 was intruded 5mm. The apex is open (approximately 2mm wide). According to IADT 2020 guidelines, what is the most appropriate management regarding the movement of the tooth and the pulp?",
+    "options": [
+      "Reposition the tooth surgically and splint for 4 weeks",
+      "Allow the tooth to re-erupt spontaneously and monitor the pulp",
+      "Perform orthodontic extrusion over the next 3 weeks",
+      "Initiate RCT with calcium hydroxide within 7 days"
+    ],
+    "correctAnswer": 1,
+    "category": "Trauma Management (IADT 2020 guidelines)",
+    "tier": 3,
+    "explanation": "CORRECT: For an open apex tooth with intrusion <7mm, spontaneous re-eruption should be allowed. Pulp revascularization is possible. INCORRECT: A - Surgical repositioning is for closed apex or severe (>7mm) intrusions; C - Orthodontic extrusion is used if spontaneous eruption doesn't occur after a few weeks; D - RCT is only indicated if necrosis is confirmed. CLINICAL PEARL: Open apex teeth have a high potential for revascularization after intrusion; spontaneous re-eruption is the least invasive and preferred first step. REFERENCE: IADT 2020 Guidelines",
+    "clinicalPearl": "Open apex teeth have a high potential for revascularization after intrusion.",
+    "reference": "IADT 2020 Guidelines"
+  },
+  {
+    "question": "A clinician is retreating tooth 46 which was obturated with a bioceramic sealer and a single-cone gutta-percha technique. The sealer is noted to be very hard. Which of the following is the most effective and evidence-based approach for the removal of the bioceramic sealer beyond the gutta-percha core?",
+    "options": [
+      "Apply Chloroform for 5 minutes to soften the sealer",
+      "Use ultrasonic tips with high power and no water",
+      "Utilize mechanized NiTi files with a gentle brushing motion",
+      "Soak the canal in 17% EDTA for 24 hours"
+    ],
+    "correctAnswer": 2,
+    "category": "Bioceramics & Materials Science",
+    "tier": 3,
+    "explanation": "CORRECT: Bioceramic sealers are insoluble in traditional solvents. Mechanized NiTi files or ultrasonic tips are required to physically remove the set material. INCORRECT: A - Chloroform dissolves GP but not bioceramics; B - No water causes excessive heat; D - EDTA is for smear layer removal and will not dissolve set bioceramic masses. CLINICAL PEARL: Retreating bioceramic single-cone cases is relatively easy until the sealer itself is encountered; once set, bioceramics are physically resistant to most chemicals. REFERENCE: Hess et al. (2011)",
+    "clinicalPearl": "Bioceramic sealers are insoluble in traditional solvents like chloroform.",
+    "reference": "Hess et al. (2011)"
+  },
+  {
+    "question": "A 10-year-old female presents for the second stage of a Regenerative Endodontic Procedure (REP) on tooth 21. The canal is clean and asymptomatic. 17% EDTA is used as the final irrigant. What is the primary biological rationale for this specific choice of irrigant in REP?",
+    "options": [
+      "To completely sterilize the canal of E. faecalis",
+      "To release growth factors from the dentin matrix",
+      "To dissolve the blood clot and improve sealer flow",
+      "To prevent the discoloration caused by Triple Antibiotic Paste"
+    ],
+    "correctAnswer": 1,
+    "category": "Regenerative Endodontics",
+    "tier": 3,
+    "explanation": "CORRECT: EDTA demineralizes dentin and releases sequestered growth factors (like TGF-beta), which promote stem cell differentiation. INCORRECT: A - EDTA is not a primary antimicrobial; C - EDTA is used BEFORE inducing the blood clot; D - EDTA does not prevent TAP staining (removing TAP or avoiding Minocycline does). CLINICAL PEARL: The use of EDTA in regenerative endodontics is a shift from purely antimicrobial goals to 'bio-inductive' goals. REFERENCE: ESE Position Statement on REPs (2016)",
+    "clinicalPearl": "EDTA demineralizes dentin and releases sequestered growth factors that promote stem cell differentiation.",
+    "reference": "ESE Position Statement on REPs (2016)"
+  },
+  {
+    "question": "A 52-year-old female presents with sharp pain on biting tooth 36. She has no restorations. A 'bite test' with a Tooth Slooth elicits sharp pain only on release. A single 10mm probing depth is found on the mid-lingual aspect. All other sites are <3mm. Transillumination shows a dark line crossing the distal marginal ridge. What is the most likely diagnosis?",
+    "options": [
+      "Cracked tooth with reversible pulpitis",
+      "Vertical root fracture (VRF)",
+      "Split tooth extending into the furcation",
+      "Symptomatic Apical Periodontitis"
+    ],
+    "correctAnswer": 1,
+    "category": "Cracked Tooth Syndrome",
+    "tier": 3,
+    "explanation": "CORRECT: The combination of release pain and a single, deep, narrow probing depth is highly pathognomonic for a Vertical Root Fracture. INCORRECT: A - Cracked teeth typically have generalized shallow probing; C - A split tooth shows mobile segments; D - SAP is a diagnosis of apical status, not the structural cause. CLINICAL PEARL: A single, deep, isolated pocket in an otherwise healthy periodontium is the most reliable clinical sign of a VRF. REFERENCE: AAE Cracked Tooth Consensus (2008)",
+    "clinicalPearl": "A single, deep, isolated pocket in an otherwise healthy periodontium is a hallmark of VRF.",
+    "reference": "AAE Cracked Tooth Consensus (2008)"
+  },
+  {
+    "question": "Microbial analysis of a failed endodontic case typically shows a shift from the primary infection's polymicrobial flora to a more restricted, predominantly Gram-positive flora. Which species is most frequently isolated from persistent, asymptomatic periapical lesions?",
+    "options": [
+      "Porphyromonas gingivalis",
+      "Enterococcus faecalis",
+      "Prevotella intermedia",
+      "Fusobacterium nucleatum"
+    ],
+    "correctAnswer": 1,
+    "category": "Microbiology & Biofilms",
+    "tier": 3,
+    "explanation": "CORRECT: Enterococcus faecalis is the most common isolate in failed/retreatment cases due to its ability to survive harsh environments and form biofilms. INCORRECT: A, C, D - These are anaerobic Gram-negative bacteria more typical of primary endodontic infections. CLINICAL PEARL: E. faecalis can survive long periods of starvation and can resist the high pH of calcium hydroxide. REFERENCE: Siqueira & Rôças (2008)",
+    "clinicalPearl": "E. faecalis can survive long periods of starvation and can resist the high pH of calcium hydroxide.",
+    "reference": "Siqueira & Rôças (2008)"
+  },
+  {
+    "question": "A 45-year-old male requires retreatment of tooth 16. CBCT axial slices show the MB1 is obturated, and there is a second canal (MB2) that is untreated. The MB2 is located 2mm palatal and 1mm mesial to the MB1 orifice. Which tool is most effective for safely removing the dentinal shelf overlying the MB2 orifice?",
+    "options": [
+      "Size 2 round bur on a slow-speed handpiece",
+      "Long-shanked LN bur on a high-speed handpiece",
+      "Ultrasonic start-X tip or CPR tip on low power",
+      "A size 15 K-file used with a vigorous filing motion"
+    ],
+    "correctAnswer": 2,
+    "category": "CBCT Interpretation",
+    "tier": 3,
+    "explanation": "CORRECT: Ultrasonic tips provide the best visibility and control for 'troughing' along the MB1-Palatal line to uncover a hidden MB2. INCORRECT: A, B - Handpieces obscure the field of view and increase perforation risk; D - K-files cannot remove the dentinal shelf. CLINICAL PEARL: Most MB2 canals are found by troughing 1-3mm palatally from the MB1 orifice using a microscope and ultrasonics. REFERENCE: Stropko (1999)",
+    "clinicalPearl": "Most MB2 canals are found by troughing 1-3mm palatally from the MB1 orifice.",
+    "reference": "Stropko (1999)"
+  },
+  {
+    "question": "A 52-year-old female presents with tooth 36, which has a 2mm furcation perforation that occurred during access 1 hour ago. The area is dry and uncontaminated. The patient has well-controlled Type 2 Diabetes (HbA1c 6.8%). What is the most critical factor for the long-term success of the perforation repair?",
+    "options": [
+      "The patient's HbA1c level and systemic health",
+      "The use of calcium hydroxide as a temporary seal",
+      "The immediate sealing of the perforation with a bioceramic",
+      "The diameter of the perforation (greater than 4mm)"
+    ],
+    "correctAnswer": 2,
+    "category": "Endodontic Mishaps (separated instruments, perforations, ledges)",
+    "tier": 3,
+    "explanation": "CORRECT: Time is the most critical factor; immediate sealing prevents bacterial colonization of the PDL and bone. INCORRECT: A - HbA1c of 6.8% is well-controlled and won't significantly affect healing; B - Ca(OH)2 is less effective than bioceramics for perforations; D - Diameter matters, but timing is more critical for prognosis. CLINICAL PEARL: Perforations sealed immediately with MTA or bioceramic putty have a prognosis comparable to non-perforated teeth. REFERENCE: Main et al. (2004)",
+    "clinicalPearl": "Perforations sealed immediately with MTA or bioceramic putty have an excellent prognosis.",
+    "reference": "Main et al. (2004)"
+  },
+  {
+    "question": "An 8-year-old male presents 3 hours after tooth 11 was avulsed and kept in a dry tissue. The tooth has an open apex (3mm). According to IADT 2020 guidelines, after the root is cleaned and the tooth replanted, what is the most likely long-term radiographic and clinical outcome for this tooth?",
+    "options": [
+      "Functional healing with a normal periodontal ligament",
+      "Pulp revascularization and continued root development",
+      "Ankylosis followed by replacement root resorption",
+      "Inflammatory resorption and rapid tooth loss"
+    ],
+    "correctAnswer": 2,
+    "category": "Trauma Management (IADT 2020 guidelines)",
+    "tier": 4,
+    "explanation": "CORRECT: Dry time >60 minutes for any avulsed tooth results in the death of PDL cells; replantation leads to ankylosis (replacement resorption). INCORRECT: A - Functional healing requires viable PDL; B - Revascularization is impossible if the pulp and PDL are dead; D - Inflammatory resorption occurs if the canal is infected; ankylosis is the result of dead PDL. CLINICAL PEARL: For dry times >60 minutes, the goal of replantation is temporary maintenance of the alveolar bone, not long-term survival. REFERENCE: IADT 2020 Guidelines",
+    "clinicalPearl": "For dry times >60 minutes, replantation leads to ankylosis (replacement resorption).",
+    "reference": "IADT 2020 Guidelines"
+  },
+  {
+    "question": "A 40-year-old female presents with a Heithersay Class 4 External Cervical Resorption on tooth 21. The lesion extends circumferentially around 75% of the root and into the middle third of the root canal. The patient has a history of breast cancer and is currently on high-dose IV bisphosphonates (Zoledronate). Which management strategy is most appropriate?",
+    "options": [
+      "Surgical exposure, curettage of the lesion, and MTA repair",
+      "Nonsurgical endodontic treatment using internal repair",
+      "Long-term monitoring and avoidance of surgical intervention",
+      "Extraction and immediate placement of a dental implant"
+    ],
+    "correctAnswer": 2,
+    "category": "Systemic Considerations (MRONJ, anticoagulants, diabetes)",
+    "tier": 4,
+    "explanation": "CORRECT: Class 4 lesions have a very poor prognosis. Surgery and extraction are high-risk for Medication-Related Osteonecrosis of the Jaw (MRONJ) due to IV bisphosphonates. Monitoring is the safest choice. INCORRECT: A - Surgery is contraindicated due to high MRONJ risk; B - Internal repair of a Class 4 lesion is rarely successful; D - Extraction is the highest risk for MRONJ. CLINICAL PEARL: In patients on IV bisphosphonates, endodontic therapy is always preferred over extraction to avoid MRONJ. REFERENCE: AAOMS Position Paper on MRONJ (2014)",
+    "clinicalPearl": "In patients on IV bisphosphonates, endodontic therapy is always preferred over extraction.",
+    "reference": "AAOMS Position Paper on MRONJ (2014)"
+  },
+  {
+    "question": "A 58-year-old male presents with tooth 16 requiring retreatment. The MB1 is obturated with GP, but a sinus tract is present. Probing depths are normal. CBCT shows a 5mm lesion on the MB root. You suspect a missed MB2. Upon access, you find the MB2 and a 3mm separated instrument in the mid-root of the MB1. You cannot bypass the instrument. What is the most evidence-based clinical synthesis for his care?",
+    "options": [
+      "Treat MB2 and MB1 coronally to the instrument, then monitor",
+      "Complete RCT on MB2, then perform apical microsurgery on MB root",
+      "Perform a hemisection and remove the entire mesiobuccal root",
+      "Extract tooth 16 and recommend a 3-unit fixed bridge"
+    ],
+    "correctAnswer": 1,
+    "category": "Nonsurgical Retreatment",
+    "tier": 4,
+    "explanation": "CORRECT: Apical microsurgery has a higher success rate than retreatment for cases with uncorrectable mishaps (like non-bypassable fragments) and persistent pathology. INCORRECT: A - This has a low success rate as the apical infection remains uncleaned; C - Hemisection is rarely done today due to implants; D - Extraction is premature when microsurgery can save the tooth. CLINICAL PEARL: Modern apical microsurgery using bioceramics and microscopes has a success rate exceeding 90%. REFERENCE: Setzer et al. (2011)",
+    "clinicalPearl": "Modern apical microsurgery has a success rate exceeding 90%.",
+    "reference": "Setzer et al. (2011)"
+  },
+  {
+    "question": "In the Vertucci classification of root canal morphology, which configuration is defined as one canal leaving the pulp chamber, dividing into two, and then merging to exit through a single apical foramen?",
+    "options": [
+      "Type II configuration",
+      "Type III configuration",
+      "Type IV configuration",
+      "Type V configuration"
+    ],
+    "correctAnswer": 1,
+    "category": "Root Canal Morphology & Complex Anatomy",
+    "tier": 1,
+    "explanation": "CORRECT: Type III is defined as 1-2-1 (one canal, two canals, then one foramen). INCORRECT: A - Type II is 2-1 (two canals merging into one); B - Type IV is 2-2 (two separate canals from chamber to apex); C - Type V is 1-2 (one canal dividing into two separate foramen). CLINICAL PEARL: Type II and III configurations both end in a single foramen but require different instrumentation strategies to ensure debridement of the split. REFERENCE: Vertucci 1984",
+    "clinicalPearl": "Type II and III configurations both end in a single foramen but require different instrumentation strategies.",
+    "reference": "Vertucci 1984"
+  },
+  {
+    "question": "A 34-year-old male presents with dull, throbbing pain in the lower left quadrant. Clinical examination of tooth 36 reveals a large restoration with no visible fractures. The tooth is tender to percussion and palpation, but shows no response to cold or EPT. Radiographs show a 3mm periapical radiolucency on the distal root and a widened PDL on the mesial root. What is the most accurate AAE endodontic diagnosis?",
+    "options": [
+      "Pulpal Necrosis with Symptomatic Apical Periodontitis",
+      "Irreversible Pulpitis with Symptomatic Apical Periodontitis",
+      "Pulpal Necrosis with Asymptomatic Apical Periodontitis",
+      "Previous Treatment with Chronic Apical Periodontitis"
+    ],
+    "correctAnswer": 0,
+    "category": "Complex Diagnosis & AAE Classification",
+    "tier": 2,
+    "explanation": "CORRECT: The lack of response to vitality tests indicates necrosis, while tenderness to percussion and palpation indicates symptomatic apical periodontitis. INCORRECT: A - Irreversible pulpitis would require a positive (likely lingering) response to cold; B - Asymptomatic apical periodontitis would not be tender to percussion; C - 'Chronic' is no longer the standard AAE terminology for apical status. CLINICAL PEARL: Percussion sensitivity is a marker of inflammation in the PDL, not necessarily the state of the pulp. REFERENCE: AAE 2009",
+    "clinicalPearl": "Percussion sensitivity is a marker of inflammation in the PDL, not necessarily the state of the pulp.",
+    "reference": "AAE 2009"
+  },
+  {
+    "question": "A 22-year-old female presents 40 minutes after an accident where tooth 11 was completely avulsed. The tooth was stored in a balanced salt solution (HBSS) and appears clean. The patient is healthy and the tooth has a closed apex. According to the IADT 2020 guidelines, what is the best management for the root surface before replanting?",
+    "options": [
+      "Replant immediately without any root treatment",
+      "Soak the root in 2% sodium fluoride",
+      "Scrub the root with 3% hydrogen peroxide",
+      "Apply minocycline or doxycycline to the root"
+    ],
+    "correctAnswer": 0,
+    "category": "Trauma Management (IADT 2020 guidelines)",
+    "tier": 2,
+    "explanation": "CORRECT: For a closed apex tooth with less than 60 minutes extra-oral time and kept in a storage medium, the tooth should be replanted immediately after gentle rinsing. INCORRECT: A - Fluoride is only used for delayed replantation (>60 mins dry) to slow osseous replacement; B - Scrubbing damage the PDL cells; C - Antibiotics on the root surface are mainly indicated for open apex teeth to encourage revascularization. CLINICAL PEARL: Minimizing extra-oral dry time is the most critical factor for preventing replacement resorption. REFERENCE: IADT 2020",
+    "clinicalPearl": "Minimizing extra-oral dry time is the most critical factor for preventing replacement resorption.",
+    "reference": "IADT 2020"
+  },
+  {
+    "question": "During the irrigation protocol for tooth 46, a clinician utilizes 5.25% Sodium Hypochlorite (NaOCl) followed by 17% EDTA. If the clinician neglects to use an intermediate rinse and proceeds to use 2% Chlorhexidine (CHX) as the final irrigant, what clinical consequence is most likely to occur?",
+    "options": [
+      "Formation of a brownish-red precipitate (PCA)",
+      "Reduction in the antimicrobial efficacy of CHX",
+      "Rapid release of chlorine gas in the canal",
+      "Immediate neutralization of the EDTA's chelating ability"
+    ],
+    "correctAnswer": 0,
+    "category": "Irrigation & Obturation Protocols",
+    "tier": 2,
+    "explanation": "CORRECT: Mixing NaOCl and CHX results in the formation of parachloroaniline (PCA), which is potentially carcinogenic and occludes tubules. INCORRECT: A - Efficacy is not the main concern, rather the toxic precipitate; B - Chlorine gas is released when mixing NaOCl and acids (like EDTA), not CHX; C - EDTA is a chelator and its neutralization is not the primary risk here. CLINICAL PEARL: Always use saline or distilled water between NaOCl and CHX to prevent PCA formation. REFERENCE: Rossi-Fedele et al. 2012",
+    "clinicalPearl": "Always use saline or distilled water between NaOCl and CHX to prevent PCA formation.",
+    "reference": "Rossi-Fedele et al. 2012"
+  },
+  {
+    "question": "A 45-year-old female presents with a small, localized 10mm probing depth on the mid-buccal aspect of tooth 36. The tooth was treated endodontically 5 years ago and has a full coverage porcelain crown. Radiographically, a 'halo' radiolucency is observed around the mesial root. What is the most probable diagnosis and recommended management?",
+    "options": [
+      "Vertical root fracture; recommend extraction",
+      "Primary endodontic failure; recommend retreatment",
+      "Periodontal abscess; recommend deep scaling",
+      "Combined endo-perio lesion; recommend surgery"
+    ],
+    "correctAnswer": 0,
+    "category": "Endo-Perio Lesions",
+    "tier": 2,
+    "explanation": "CORRECT: A localized deep pocket in a treated tooth with a 'halo' radiolucency is pathognomonic for a vertical root fracture (VRF). INCORRECT: A - Retreatment will not resolve a VRF; B - A periodontal abscess would likely involve wider probing or generalized disease; C - Surgery is contraindicated for a VRF as the fracture cannot be repaired. CLINICAL PEARL: A 'halo' or 'J-shaped' radiolucency in a post-treated tooth is a high-suspicion sign for VRF. REFERENCE: AAE Cracked Tooth Consensus",
+    "clinicalPearl": "A 'halo' or 'J-shaped' radiolucency in a post-treated tooth is a high-suspicion sign for VRF.",
+    "reference": "AAE Cracked Tooth Consensus"
+  },
+  {
+    "question": "While negotiating the MB2 canal of tooth 16, a size 10 K-file becomes wedged and separates 3mm from the apex. The fragment is entirely apical to the curvature. The tooth is asymptomatic and the pulp was necrotic with a 2mm periapical lesion. What is the most appropriate next step?",
+    "options": [
+      "Attempt to bypass the fragment with smaller files",
+      "Attempt to retrieve the fragment with ultrasonics",
+      "Obturate the canal to the level of the fragment",
+      "Perform immediate apical surgery on the MB root"
+    ],
+    "correctAnswer": 0,
+    "category": "Endodontic Mishaps",
+    "tier": 2,
+    "explanation": "CORRECT: Bypassing is the first and safest conservative approach for fragments located apical to the curvature. INCORRECT: A - Ultrasonics are high-risk for fragments beyond the curvature as they often cause further complications or perforations; B - Obturating to the fragment is a last resort after bypass attempts fail; C - Surgery is only indicated if conservative management fails and symptoms persist. CLINICAL PEARL: Bypassing a file allows for cleaning and shaping of the space beside and beyond the instrument. REFERENCE: Terauchi et al. 2006",
+    "clinicalPearl": "Bypassing a file allows for cleaning and shaping of the space beside and beyond the instrument.",
+    "reference": "Terauchi et al. 2006"
+  },
+  {
+    "question": "A 28-year-old male presents with a 'pink spot' on the cervical area of tooth 11. Radiographs show a well-defined, symmetrical radiolucency that expands the root canal space. When a second radiograph is taken with a 20-degree mesial shift, the radiolucency stays centered within the canal. What is the diagnosis?",
+    "options": [
+      "Internal inflammatory root resorption",
+      "External cervical invasive resorption",
+      "Internal replacement root resorption",
+      "Cervical caries with pulp exposure"
+    ],
+    "correctAnswer": 0,
+    "category": "Resorption",
+    "tier": 2,
+    "explanation": "CORRECT: The 'pink spot' and a radiolucency that stays centered on different angled radiographs (Clark's rule) are characteristic of internal resorption. INCORRECT: A - External cervical resorption shifts its position relative to the canal on angled radiographs; B - Internal replacement resorption involves the deposition of bone-like material, not a clear radiolucency; C - Caries would not typically present with the symmetrical 'ballooning' of the canal. CLINICAL PEARL: Internal resorption moves 'with' the canal on shift shots; external resorption 'moves away'. REFERENCE: Heithersay 1999",
+    "clinicalPearl": "Internal resorption moves 'with' the canal on shift shots; external resorption 'moves away'.",
+    "reference": "Heithersay 1999"
+  },
+  {
+    "question": "During the retreatment of tooth 46, you discover the canals were obturated with a carrier-based system (e.g., Thermafil). Which technique is the most recommended for the safe removal of the plastic carrier?",
+    "options": [
+      "Establish a pathway alongside the carrier with K-files",
+      "Use high-speed long-neck burs to drill out the core",
+      "Apply chloroform and use H-files to pull the core",
+      "Utilize a System B tip to melt the carrier's handle"
+    ],
+    "correctAnswer": 0,
+    "category": "Nonsurgical Retreatment",
+    "tier": 2,
+    "explanation": "CORRECT: Creating space with small manual files (K-files) alongside the carrier allows for subsequent bypass or engagement with H-files. INCORRECT: A - Drilling out the core is high risk for perforation and often fails as the carrier is flexible; B - Chloroform softens GP but doesn't dissolve the plastic carrier; C - System B may melt the GP but often cannot safely reach the carrier core. CLINICAL PEARL: Finding the 'groove' alongside a carrier is the key to successful removal. REFERENCE: Gorni & Gagliani 2004",
+    "clinicalPearl": "Finding the 'groove' alongside a carrier is the key to successful removal.",
+    "reference": "Gorni & Gagliani 2004"
+  },
+  {
+    "question": "A clinician is performing apical microsurgery on tooth 21. After root-end resection of 3mm, what is the most evidence-based recommendation for the depth of the retrograde preparation and the choice of filling material?",
+    "options": [
+      "3mm depth with Mineral Trioxide Aggregate (MTA)",
+      "1mm depth with Zinc Oxide Eugenol (IRM)",
+      "5mm depth with Light-cured Composite Resin",
+      "3mm depth with Amalgam (zinc-free)"
+    ],
+    "correctAnswer": 0,
+    "category": "Surgical Endodontics",
+    "tier": 2,
+    "explanation": "CORRECT: A 3mm retrograde preparation provides an adequate apical seal, and MTA/bioceramics are the gold standard for biocompatibility. INCORRECT: A - 1mm is insufficient to ensure a hermetic seal; B - Composite resin is moisture-sensitive and not ideal for the surgical site; C - Amalgam is no longer recommended due to corrosion and poor biocompatibility. CLINICAL PEARL: A 3mm resection followed by a 3mm retro-prep removes 98% of lateral canals and apical ramifications. REFERENCE: Kim & Rethnam 2008",
+    "clinicalPearl": "A 3mm resection followed by a 3mm retro-prep removes 98% of lateral canals and apical ramifications.",
+    "reference": "Kim & Rethnam 2008"
+  },
+  {
+    "question": "A 10-year-old child presents with a 2mm pulp exposure on tooth 11 following a fall 2 hours ago. The tooth is vital and the root is 70% formed. What is the most appropriate treatment to ensure continued physiological root development?",
+    "options": [
+      "Partial pulpotomy (Cvek technique) with bioceramic",
+      "Direct pulp capping with calcium hydroxide",
+      "Full pulpotomy at the cervical level with MTA",
+      "Nonsurgical root canal treatment and apexification"
+    ],
+    "correctAnswer": 0,
+    "category": "Vital Pulp Therapy",
+    "tier": 2,
+    "explanation": "CORRECT: A partial pulpotomy is indicated for traumatic exposures in young teeth to maintain pulp vitality and allow for apexogenesis. INCORRECT: A - Direct pulp capping has lower success rates for 2mm traumatic exposures than partial pulpotomy; B - Full pulpotomy is more invasive and reserved for cases with deeper inflammation; C - RCT is contraindicated in vital teeth with open apices unless vitality is lost. CLINICAL PEARL: Cvek pulpotomy aims to remove only the inflamed superficial pulp tissue. REFERENCE: Cvek 1978 / IADT 2020",
+    "clinicalPearl": "Cvek pulpotomy aims to remove only the inflamed superficial pulp tissue.",
+    "reference": "Cvek 1978 / IADT 2020"
+  },
+  {
+    "question": "A 52-year-old male presents with sharp pain on biting on tooth 46. The tooth has a large MOD amalgam restoration and is vital to cold. Probing reveals 3mm depths circumferentially. When using a Tooth Slooth, pain is elicited only when the patient releases pressure from the distobuccal cusp. What is the most likely diagnosis?",
+    "options": [
+      "Cracked tooth syndrome",
+      "Reversible pulpitis",
+      "Symptomatic apical periodontitis",
+      "Vertical root fracture"
+    ],
+    "correctAnswer": 0,
+    "category": "Cracked Tooth Syndrome",
+    "tier": 2,
+    "explanation": "CORRECT: 'Pain on release' is the classic hallmark of a cracked tooth. INCORRECT: A - Reversible pulpitis describes the pulp's state, not the mechanical crack; B - Symptomatic apical periodontitis involves pain on percussion, not specifically release; C - Vertical root fracture usually involves a deep isolated pocket and a non-vital tooth. CLINICAL PEARL: Use transillumination and the Tooth Slooth to confirm the presence and location of a crack. REFERENCE: AAE Cracked Tooth Consensus 2019",
+    "clinicalPearl": "Use transillumination and the Tooth Slooth to confirm the presence and location of a crack.",
+    "reference": "AAE Cracked Tooth Consensus 2019"
+  },
+  {
+    "question": "A clinician is reviewing a CBCT scan of tooth 16 to locate a suspected MB2 canal. On the axial view at the level of the pulp floor, a dark line is noted between the MB1 and the Palatal canal. What is the most critical interpretation to distinguish a 'true canal' from a 'beam hardening' artifact?",
+    "options": [
+      "Artifacts usually align with high-density objects like metal posts",
+      "True canals must be visible on the sagittal and coronal views",
+      "Artifacts are only visible in the axial slices of the coronal third",
+      "True canals always appear perfectly circular in the middle third"
+    ],
+    "correctAnswer": 0,
+    "category": "CBCT Interpretation",
+    "tier": 3,
+    "explanation": "CORRECT: Beam hardening occurs between two high-density objects (like GP or posts), creating dark streaks that can mimic cracks or canals. INCORRECT: A - True canals should be trackable across multiple slices but not necessarily visible in all three planes depending on size; B - Artifacts can occur anywhere density is high, not just the coronal third; C - Canals in MB roots are often oval or ribbon-shaped, not circular. CLINICAL PEARL: If a 'crack' or 'canal' on CBCT disappears when you change the contrast/density settings, it is likely an artifact. REFERENCE: Scarfe et al. 2009",
+    "clinicalPearl": "If a 'crack' or 'canal' on CBCT disappears when you change the contrast/density settings, it is likely an artifact.",
+    "reference": "Scarfe et al. 2009"
+  },
+  {
+    "question": "A 12-year-old male presents 1 hour after tooth 11 was intruded 5mm into the alveolar bone. The tooth has a wide open apex (2.5mm). According to the IADT 2020 guidelines, which management strategy provides the best chance for pulp revascularization and continued root development?",
+    "options": [
+      "Allow for spontaneous eruption and monitor for 4 weeks",
+      "Reposition the tooth surgically and splint for 4 weeks",
+      "Reposition the tooth orthodontically over 3 weeks",
+      "Immediate pulp extirpation and calcium hydroxide therapy"
+    ],
+    "correctAnswer": 0,
+    "category": "Trauma Management (IADT 2020 guidelines)",
+    "tier": 3,
+    "explanation": "CORRECT: For open apex teeth with less than 7mm intrusion, spontaneous eruption should be allowed first to maximize revascularization potential. INCORRECT: A - Surgical repositioning is indicated for closed apex teeth or intrusions >7mm; B - Orthodontic repositioning is used if spontaneous eruption fails to occur; C - Pulp extirpation should be avoided in open-apex teeth unless clinical signs of necrosis appear. CLINICAL PEARL: In immature teeth, the goal is to avoid intervention that could disrupt the surviving pulp. REFERENCE: IADT 2020",
+    "clinicalPearl": "In immature teeth, the goal is to avoid intervention that could disrupt the surviving pulp.",
+    "reference": "IADT 2020"
+  },
+  {
+    "question": "A 55-year-old female presents with persistent pain after the first visit of RCT on tooth 46. During the visit, 5.25% NaOCl and 17% EDTA were used. A size 25/.04 NiTi file was used to length. If a ledge has been created in the mesiolingual canal at the apical third, which instrumentation sequence is most likely to result in a successful bypass?",
+    "options": [
+      "Pre-curved size 10 K-file with a 'picking' motion",
+      "Size 15 NiTi rotary file at high speed (600 rpm)",
+      "Size 20 H-file used with a forceful apical thrust",
+      "Ultrasonic tip used to vibrate the ledge surface"
+    ],
+    "correctAnswer": 0,
+    "category": "Endodontic Mishaps",
+    "tier": 3,
+    "explanation": "CORRECT: A pre-curved small stainless steel file is necessary to find the original canal path and bypass the ledge. INCORRECT: A - NiTi files follow the ledge and will likely perforate; B - H-files are too aggressive and may lock or break if used with force on a ledge; C - Ultrasonics are more likely to create a 'shelf' or worsen the ledge. CLINICAL PEARL: Use a 'watch-winding' motion once the tip of the pre-curved file has slipped past the ledge. REFERENCE: Jafarzadeh & Abbott 2007",
+    "clinicalPearl": "Use a 'watch-winding' motion once the tip of the pre-curved file has slipped past the ledge.",
+    "reference": "Jafarzadeh & Abbott 2007"
+  },
+  {
+    "question": "During the second appointment of a regenerative endodontic procedure on tooth 21 (open apex), the clinician uses 17% EDTA as the final irrigant. What is the primary biological objective of this specific step according to the American Association of Endodontists (AAE) and ESE guidelines?",
+    "options": [
+      "Release of growth factors from the dentin matrix",
+      "Complete eradication of the E. faecalis biofilm",
+      "Neutralization of the high pH of Triple Antibiotic Paste",
+      "Promotion of a blood clot by irritating the periapex"
+    ],
+    "correctAnswer": 0,
+    "category": "Regenerative Endodontics",
+    "tier": 3,
+    "explanation": "CORRECT: EDTA demineralizes dentin and exposes growth factors (like TGF-beta) that aid in stem cell differentiation. INCORRECT: A - EDTA has minimal antimicrobial action compared to NaOCl; B - While it might change pH, its primary goal in REP is growth factor release; C - Blood clot induction is performed with a file, not by the EDTA itself. CLINICAL PEARL: EDTA is the preferred final irrigant in REPs to create a pro-regenerative surface. REFERENCE: Galler et al. 2011",
+    "clinicalPearl": "EDTA is the preferred final irrigant in REPs to create a pro-regenerative surface.",
+    "reference": "Galler et al. 2011"
+  },
+  {
+    "question": "A 48-year-old male with well-controlled hypertension presents with tooth 36, which has a 2mm furcation perforation that occurred during access 30 minutes ago. The area is clearly visible and uncontaminated. Which factor is MOST critical for the long-term prognosis of this perforation repair?",
+    "options": [
+      "Immediate sealing of the perforation with a bioceramic",
+      "The use of calcium hydroxide as an interim medicament",
+      "The patient's blood pressure at the time of the repair",
+      "The age of the patient and their systemic health"
+    ],
+    "correctAnswer": 0,
+    "category": "Endodontic Mishaps",
+    "tier": 3,
+    "explanation": "CORRECT: Time and contamination are the most critical factors; immediate sealing prevents bacterial ingress and periodontal breakdown. INCORRECT: A - Calcium hydroxide can cause inflammation if pushed into the periodontium and delays the permanent seal; B - While systemic health matters, it is secondary to local mechanical and bacterial control; C - Patient age is not a primary factor in perforation repair success. CLINICAL PEARL: Treat a perforation like a 'surgical' emergency—seal it as quickly as possible. REFERENCE: Main et al. 2004",
+    "clinicalPearl": "Treat a perforation like a 'surgical' emergency—seal it as quickly as possible.",
+    "reference": "Main et al. 2004"
+  },
+  {
+    "question": "A 32-year-old female presents with a 'hot tooth' (Symptomatic Irreversible Pulpitis) on tooth 46. After an Inferior Alveolar Nerve Block (IANB) with 2% Lidocaine and 1:100,000 epinephrine, she has profound lip numbness but is still sensitive to cold and during the initial access. Which supplemental technique is most supported by evidence to achieve pulpal anesthesia?",
+    "options": [
+      "Intraosseous injection with 4% Articaine",
+      "Infiltration of 4% Articaine on the buccal",
+      "Intrapulpal injection with 2% Lidocaine",
+      "Repeat the IANB with a different anesthetic"
+    ],
+    "correctAnswer": 0,
+    "category": "Local Anesthesia in Endodontics",
+    "tier": 3,
+    "explanation": "CORRECT: Intraosseous anesthesia has been shown to have a high success rate for mandibular molars with pulpitis when IANB fails. INCORRECT: A - Buccal infiltration in the mandible has lower success than intraosseous due to cortical bone thickness; B - Intrapulpal is effective but extremely painful and only used once the pulp is exposed; C - Repeating the same block often yields the same result if the first was technically successful. CLINICAL PEARL: Articaine buccal infiltration is more effective in the maxilla than the mandible. REFERENCE: Reader et al. 2011",
+    "clinicalPearl": "Articaine buccal infiltration is more effective in the maxilla than the mandible.",
+    "reference": "Reader et al. 2011"
+  },
+  {
+    "question": "A 60-year-old male presents with persistent 'spontaneous, electric-shock-like pain' on the right side of his face, often triggered by touching his lip or shaving. Tooth 46 was treated endodontically 1 month ago by a generalist for the same pain, but the symptoms have worsened. The tooth is non-tender to percussion and radiographs are normal. What is the most likely diagnosis?",
+    "options": [
+      "Trigeminal neuralgia",
+      "Atypical odontalgia",
+      "Persistent dentoalveolar pain disorder",
+      "Missed distal canal in tooth 46"
+    ],
+    "correctAnswer": 0,
+    "category": "Complex Diagnosis & AAE Classification",
+    "tier": 3,
+    "explanation": "CORRECT: The 'electric-shock' nature and cutaneous trigger points are classic for Trigeminal Neuralgia. INCORRECT: A - Atypical odontalgia is usually a dull, continuous ache; B - Persistent dentoalveolar pain is a broader term but the trigger points specifically point to TN; C - A missed canal would likely present with inflammatory symptoms like sensitivity to heat or percussion. CLINICAL PEARL: Never perform endodontic treatment on a tooth with 'electric-shock' pain without ruled out neuralgia. REFERENCE: Nixdorf et al. 2011",
+    "clinicalPearl": "Never perform endodontic treatment on a tooth with 'electric-shock' pain without ruled out neuralgia.",
+    "reference": "Nixdorf et al. 2011"
+  },
+  {
+    "question": "Microbial analysis of a primary endodontic infection reveals a complex polymicrobial flora. Which of the following neuropeptides is the primary mediator responsible for the localized vasodilation and increased vascular permeability seen in the dental pulp during the early stages of this neurogenic inflammation?",
+    "options": [
+      "Calcitonin gene-related peptide (CGRP)",
+      "Substance P (SP)",
+      "Neurokinin A (NKA)",
+      "Vasoactive intestinal peptide (VIP)"
+    ],
+    "correctAnswer": 0,
+    "category": "Pulp Biology & Pulp Testing",
+    "tier": 3,
+    "explanation": "CORRECT: CGRP is the most potent vasodilator released from sensory nerve endings in the pulp during inflammation. INCORRECT: A - Substance P is primarily responsible for increased vascular permeability (edema) but is less potent in vasodilation than CGRP; B - Neurokinin A works alongside SP but is less prevalent; C - VIP is associated with parasympathetic fibers and is less involved in the initial inflammatory response. CLINICAL PEARL: Neuropeptides can lead to a 'vicious cycle' of increased pulpal pressure and further inflammation. REFERENCE: Kim 1985 / Byers et al. 1990",
+    "clinicalPearl": "Neuropeptides can lead to a 'vicious cycle' of increased pulpal pressure and further inflammation.",
+    "reference": "Kim 1985 / Byers et al. 1990"
+  },
+  {
+    "question": "A specialist endodontist in the Middle East region discovers a separated 4mm NiTi instrument in the MB2 canal of tooth 26 during a retreatment. The instrument was separated by the previous dentist who did not mention it. The patient is currently asymptomatic. What is the most ethically and legally sound action according to the regional medical codes of conduct?",
+    "options": [
+      "Inform the patient about the fragment and its implications",
+      "Do not inform the patient if the prognosis is still favorable",
+      "Inform the patient only if they specifically ask about risks",
+      "Inform only the referring dentist and let them tell the patient"
+    ],
+    "correctAnswer": 0,
+    "category": "Ethics & Jurisprudence",
+    "tier": 3,
+    "explanation": "CORRECT: Full disclosure of clinical findings, including mishaps, is a fundamental requirement of informed consent and patient autonomy. INCORRECT: A - Not informing is a violation of the patient's right to know and can lead to legal liability; B - The clinician has a direct duty to the patient regardless of the prognosis; C - Delegating the disclosure is improper as the person who discovered it must explain it. CLINICAL PEARL: Transparency regarding mishaps builds trust and is a legal requirement in modern healthcare. REFERENCE: Dubai Health Authority / SCFHS Code of Ethics",
+    "clinicalPearl": "Transparency regarding mishaps builds trust and is a legal requirement in modern healthcare.",
+    "reference": "Dubai Health Authority / SCFHS Code of Ethics"
+  },
+  {
+    "question": "A 45-year-old female with a history of breast cancer and current use of high-dose intravenous bisphosphonates (Zoledronate) presents with tooth 36. The tooth has a large periapical lesion (6mm) and is symptomatic. Probing is 4mm. Radiographically, the PDL is thickened. What is the most appropriate management to minimize the risk of Medication-Related Osteonecrosis of the Jaw (MRONJ)?",
+    "options": [
+      "Perform nonsurgical root canal treatment",
+      "Extract the tooth with a 'drug holiday'",
+      "Perform apical surgery with a wide flap",
+      "Perform extraction and immediate implant"
+    ],
+    "correctAnswer": 0,
+    "category": "Systemic Considerations (MRONJ, anticoagulants, diabetes)",
+    "tier": 3,
+    "explanation": "CORRECT: Endodontic treatment is the preferred alternative to extraction in patients at risk for MRONJ, as it avoids bone exposure. INCORRECT: A - Extraction is high risk for MRONJ and drug holidays for bisphosphonates are controversial and often ineffective; B - Surgery involves bone exposure and is higher risk than nonsurgical RCT; C - Implants are contraindicated or high risk in this population. CLINICAL PEARL: In MRONJ-risk patients, avoid instrumentation beyond the apex to prevent inoculation of bone. REFERENCE: AAOMS 2022 / Ruggiero et al.",
+    "clinicalPearl": "In MRONJ-risk patients, avoid instrumentation beyond the apex to prevent inoculation of bone.",
+    "reference": "AAOMS 2022 / Ruggiero et al."
+  },
+  {
+    "question": "A 38-year-old female presents with tooth 21 which has a Heithersay Class 3 External Cervical Resorption (ECR) on the mesial aspect. The lesion extends into the coronal third of the root and circumferentially involves 45% of the root surface. CBCT shows the lesion has penetrated to the pulp. The tooth is vital. What is the most evidence-based management strategy?",
+    "options": [
+      "Surgical exposure, debridement, and repair with bioceramic",
+      "Nonsurgical root canal treatment followed by internal repair",
+      "Intentional replantation after extra-oral debridement",
+      "Monitoring the lesion until the tooth becomes non-vital"
+    ],
+    "correctAnswer": 0,
+    "category": "Resorption",
+    "tier": 4,
+    "explanation": "CORRECT: Class 3 ECR requires surgical access to completely debride the resorptive tissue, and bioceramics are ideal for the cervical repair. INCORRECT: A - Nonsurgical treatment alone cannot access the external source of the resorption; B - Intentional replantation is a last resort and usually for Class 4 or unreachable lesions; C - Monitoring will lead to further destruction and loss of the tooth. CLINICAL PEARL: For ECR with pulpal involvement, RCT is usually performed prior to or during the surgical repair. REFERENCE: Heithersay 1999 / Patel et al. 2018",
+    "clinicalPearl": "For ECR with pulpal involvement, RCT is usually performed prior to or during the surgical repair.",
+    "reference": "Heithersay 1999 / Patel et al. 2018"
+  },
+  {
+    "question": "A 24-year-old male presents for a 2-year follow-up of tooth 11, which was replanted 45 minutes after avulsion (stored in milk). The patient reports the tooth 'feels different' when biting. Clinically, the tooth is in infra-occlusion (1mm) and has a high-pitched, metallic sound on percussion. Radiographs show a loss of the PDL space and an irregular 'moth-eaten' appearance of the root being replaced by bone. What is the most appropriate clinical synthesis and long-term prognosis?",
+    "options": [
+      "Replacement resorption (ankylosis); poor long-term prognosis",
+      "External inflammatory resorption; good if RCT is redone",
+      "Surface resorption; excellent prognosis as it will heal",
+      "Cervical resorption; requires surgical debridement"
+    ],
+    "correctAnswer": 0,
+    "category": "Trauma Management (IADT 2020 guidelines)",
+    "tier": 4,
+    "explanation": "CORRECT: Infra-occlusion, metallic percussion (dull/high), and radiographic loss of PDL are definitive signs of replacement resorption/ankylosis. INCORRECT: A - External inflammatory resorption is driven by infection and would show radiolucencies, not bone replacement; B - Surface resorption is a transient healing process and doesn't cause infra-occlusion; C - Cervical resorption would not cause a metallic sound on percussion. CLINICAL PEARL: In young patients, ankylosed teeth should be monitored for 'decoronation' if infra-occlusion exceeds 1-2mm. REFERENCE: IADT 2020",
+    "clinicalPearl": "In young patients, ankylosed teeth should be monitored for 'decoronation' if infra-occlusion exceeds 1-2mm.",
+    "reference": "IADT 2020"
   }
 ]
