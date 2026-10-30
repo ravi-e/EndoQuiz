@@ -101604,5 +101604,170 @@
     "explanation": "CORRECT: Bioceramic sealers are chemically stable and show almost zero shrinkage (or slight expansion), allowing them to be used in thicker layers than traditional sealers. INCORRECT: A - Bioceramics are actually notoriously difficult to remove if used without a master cone; B - Flexibility is not a goal of obturation; C - Cost is actually higher for bioceramics; D - Warm vertical compaction causes resin sealers to shrink upon cooling, which is why a high GP-to-sealer ratio is needed in that technique. CLINICAL PEARL: The single-cone bioceramic technique relies on the sealer to provide the seal, whereas warm techniques rely on the gutta-percha. REFERENCE: Koch and Brave, 'Bioceramics: A New Paradigm in Endodontics'.",
     "clinicalPearl": "Bioceramic sealers allow for a single-cone technique because they do not shrink upon setting, unlike traditional resin or zinc-oxide eugenol sealers.",
     "reference": "Koch & Brave"
+  },
+  {
+    "question": "A 45-year-old female presents with a chief complaint of dull, vague pain in the upper left posterior region for 3 weeks. Tooth 26 has a large amalgam restoration and is mildly sensitive to percussion. Cold testing results in a 3-second response that matches control teeth. The patient notes the pain is more intense when she performs her morning jog or bends over to tie her shoes. A periapical radiograph shows a slight thickening of the Schneiderian membrane and intact lamina dura around all roots of 26. What is the most appropriate next step in management?",
+    "options": [
+      "Initiate root canal treatment on tooth 26",
+      "Perform a test cavity to confirm pulp vitality",
+      "Refer the patient for a medical consultation",
+      "Prescribe 500mg Amoxicillin for seven days"
+    ],
+    "correctAnswer": 2,
+    "category": "Complex Diagnosis & AAE Classification",
+    "tier": 2,
+    "explanation": "CORRECT: The symptoms (pain on bending/jarring) and radiographic findings (membrane thickening) strongly suggest maxillary sinusitis rather than endodontic pathology, requiring medical referral. INCORRECT: A - Endodontic treatment is contraindicated as the pulp is vital and asymptomatic; B - Cold testing was already conclusive and a test cavity is an unnecessary invasive procedure; D - Antibiotics should not be prescribed by the dentist for suspected non-odontogenic infections without a diagnosis. CLINICAL PEARL: Pain that changes with head position or physical impact (like jogging) is a classic indicator of sinus origin rather than pulpal origin. REFERENCE: AAE Differential Diagnosis of Oral and Facial Pain",
+    "clinicalPearl": "Always check for 'positional pain'—pain that increases when leaning forward is a pathognomonic sign for maxillary sinusitis.",
+    "reference": "AAE Differential Diagnosis of Oral and Facial Pain"
+  },
+  {
+    "question": "A 10-year-old child presents 45 minutes after tooth 21 was completely avulsed during a school accident. The tooth was stored in a dry tissue paper until the parent placed it in a cup of cold milk 10 minutes ago. Clinical examination reveals an open apex (Stage 4 root development). According to IADT 2020 guidelines, what is the best strategy to maximize the chance of pulp revascularization?",
+    "options": [
+      "Replant immediately after rinsing with saline",
+      "Soak in Minocycline solution before replanting",
+      "Perform an extraoral root canal treatment first",
+      "Scrub the root surface with a chlorhexidine brush"
+    ],
+    "correctAnswer": 1,
+    "category": "Trauma Management (IADT 2020 guidelines)",
+    "tier": 3,
+    "explanation": "CORRECT: For an open apex tooth with less than 60 mins dry time, topical antibiotics (like Minocycline or Doxycycline) are recommended to enhance the chance of revascularization by reducing bacterial load. INCORRECT: A - While saline rinsing is part of the protocol, soaking in antibiotics is specifically recommended for open apices to aid revascularization; C - Extraoral RCT is only indicated for closed apex teeth with long dry times (>60 mins); D - Scrubbing the root surface destroys the periodontal ligament and is contraindicated. CLINICAL PEARL: In immature teeth, the goal is to keep the pulp 'clean' but vital to allow for potential continued root development. REFERENCE: IADT 2020 Guidelines",
+    "clinicalPearl": "For avulsed immature teeth, soaking in 1mg/20mL of Doxycycline for 5 minutes can double the rate of successful pulp revascularization.",
+    "reference": "IADT 2020 Guidelines"
+  },
+  {
+    "question": "During the instrumentation of the mesiobuccal canal of tooth 46, a size 20 .04 taper NiTi rotary file separates in the middle third of the canal. The fragment is 3mm long and wedged apical to a slight curvature. Which of the following factors is the most critical contraindication to attempting ultrasonic removal of this fragment?",
+    "options": [
+      "The fragment is located in a curved canal",
+      "The fragment is located below the root orifice",
+      "The fragment is made of Nickel-Titanium alloy",
+      "The fragment is located in the middle third"
+    ],
+    "correctAnswer": 0,
+    "category": "Endodontic Mishaps (separated instruments, perforations, ledges)",
+    "tier": 2,
+    "explanation": "CORRECT: Attempting to use ultrasonics around a curve significantly increases the risk of root perforation and further fragment breakage due to lack of straight-line access. INCORRECT: B - Locations below the orifice can be managed if they are in the straight portion of the canal; C - NiTi is harder to remove than stainless steel but it is not a direct contraindication; D - Middle third is often accessible unless a curve is present. CLINICAL PEARL: If a file breaks around a curve, 'bypassing' the fragment with small K-files is often safer and more predictable than attempting ultrasonic removal. REFERENCE: Terauchi et al. Instrument Removal Techniques",
+    "clinicalPearl": "Always assess the 'visual straight-line access' on CBCT; if the fragment is hidden behind a wall of dentin (around a curve), the risk of perforation exceeds the benefit of removal.",
+    "reference": "Terauchi et al. Instrument Removal Techniques"
+  },
+  {
+    "question": "A 22-year-old male presents for a microsurgical endodontic procedure on tooth 11, which has a persistent periapical lesion and a well-fitted cast post. According to current evidence-based protocols, what is the most appropriate management of the root end to ensure success?",
+    "options": [
+      "Resect 3mm of the apex with a 45-degree bevel",
+      "Resect 3mm of the apex with a 0-degree bevel",
+      "Resect 1mm of the apex with a 10-degree bevel",
+      "Resect 5mm of the apex with a 30-degree bevel"
+    ],
+    "correctAnswer": 1,
+    "category": "Surgical Endodontics",
+    "tier": 3,
+    "explanation": "CORRECT: Resecting 3mm removes 98% of apical ramifications, and a 0-degree bevel (perpendicular to the long axis) minimizes exposed dentinal tubules and prevents lingual perforation during retro-preparation. INCORRECT: A - A 45-degree bevel is an outdated technique that increases leakage and misses apical anatomy; C - 1mm resection is insufficient to remove the majority of lateral canals; D - 5mm resection excessively compromises the crown-to-root ratio. CLINICAL PEARL: Modern endodontic surgery relies on high magnification and ultrasonic retro-preparation, making steep bevels unnecessary and harmful to the seal. REFERENCE: Kim & Kratchman, Modern Endodontic Surgery",
+    "clinicalPearl": "A 0-degree bevel significantly reduces the number of exposed dentinal tubules at the root end, directly lowering the risk of post-surgical failure.",
+    "reference": "Kim & Kratchman, Modern Endodontic Surgery"
+  },
+  {
+    "question": "A 52-year-old male presents with sharp pain on biting on tooth 46. He reports that the pain occurs only when he releases his bite from a hard object. Probing depths are 3mm circumferentially. The tooth has a large MOD composite and responds normally to cold. A 'Tooth Slooth' test is positive only on the distobuccal cusp. What is the most likely diagnosis?",
+    "options": [
+      "Symptomatic Irreversible Pulpitis",
+      "Symptomatic Apical Periodontitis",
+      "Cracked Tooth Syndrome",
+      "Vertical Root Fracture"
+    ],
+    "correctAnswer": 2,
+    "category": "Cracked Tooth Syndrome",
+    "tier": 2,
+    "explanation": "CORRECT: 'Rebound pain' on biting, localized to a specific cusp, is a hallmark of a cracked tooth. Normal cold response indicates the pulp is still vital. INCORRECT: A - Irreversible pulpitis would show lingering pain to cold; B - Apical periodontitis would show sensitivity to percussion, not just biting; D - Vertical root fracture usually presents with deep narrow probing and a necrotic pulp. CLINICAL PEARL: Rebound pain occurs because the separated segments of the crack spring back together when pressure is released, irritating the pulp or PDL. REFERENCE: AAE Cracked Tooth Diagnosis",
+    "clinicalPearl": "The 'rebound' pain on release is a specific clinical indicator that differentiates a crack from apical periodontitis.",
+    "reference": "AAE Cracked Tooth Diagnosis"
+  },
+  {
+    "question": "Which of the following is the primary chemical component responsible for the 'bioactivity' and induction of hydroxyapatite formation in hydraulic calcium silicate cements like Mineral Trioxide Aggregate (MTA)?",
+    "options": [
+      "Bismuth Oxide",
+      "Calcium Oxide",
+      "Tricalcium Silicate",
+      "Zirconium Oxide"
+    ],
+    "correctAnswer": 2,
+    "category": "Bioceramics & Materials Science",
+    "tier": 1,
+    "explanation": "CORRECT: Tricalcium silicate reacts with water to form calcium silicate hydrate and calcium hydroxide, the latter of which provides the alkaline pH and calcium ions for hydroxyapatite formation. INCORRECT: A - Bismuth Oxide is the radiopacifier in traditional MTA and is actually associated with tooth discoloration; B - Calcium oxide is a byproduct but not the primary bioactive phase; D - Zirconium oxide is used as a radiopacifier in newer bioceramics to prevent staining. CLINICAL PEARL: The formation of a hydroxyapatite-like layer at the material-dentin interface is what creates the superior seal and biocompatibility of bioceramics. REFERENCE: Torabinejad, Mineral Trioxide Aggregate",
+    "clinicalPearl": "Tricalcium silicate is the 'engine' of the bioceramic reaction; it ensures a constant high pH of 12.5 which is bactericidal and osteoinductive.",
+    "reference": "Torabinejad, Mineral Trioxide Aggregate"
+  },
+  {
+    "question": "Which of the following describes the most common microbial species found in persistent endodontic infections and failed root canal treatments?",
+    "options": [
+      "Porphyromonas gingivalis",
+      "Enterococcus faecalis",
+      "Prevotella intermedia",
+      "Fusobacterium nucleatum"
+    ],
+    "correctAnswer": 1,
+    "category": "Microbiology & Biofilms",
+    "tier": 1,
+    "explanation": "CORRECT: Enterococcus faecalis is a Gram-positive facultative anaerobe frequently isolated from failing root canals due to its ability to survive harsh environments and penetrate dentinal tubules. INCORRECT: A, C, and D are primary endodontic pathogens (mostly Gram-negative anaerobes) but are less common in persistent infections compared to E. faecalis. CLINICAL PEARL: E. faecalis utilizes a proton pump to maintain its internal pH, making it highly resistant to the high pH of calcium hydroxide. REFERENCE: Siqueira, Endodontic Microbiology",
+    "clinicalPearl": "E. faecalis is found in up to 77% of failed cases but is rarely found in untreated necrotic teeth.",
+    "reference": "Siqueira, Endodontic Microbiology"
+  },
+  {
+    "question": "According to the Toronto Study, which of the following preoperative factors is the strongest predictor of a lower success rate in nonsurgical endodontic retreatment?",
+    "options": [
+      "Presence of a preoperative periapical lesion",
+      "The age of the patient (over 65 years old)",
+      "Type of previous root canal filling material",
+      "The length of the original root canal filling"
+    ],
+    "correctAnswer": 0,
+    "category": "Prognosis & Evidence-Based Outcomes",
+    "tier": 2,
+    "explanation": "CORRECT: The presence of a preoperative radiolucency significantly reduces the success rate of both primary treatment and retreatment. INCORRECT: B - Age is not a significant predictor of outcome in the Toronto study; C - Material (GP vs others) is less critical than the presence of infection; D - Length is a factor but less significant than the presence of a lesion. CLINICAL PEARL: Success rates drop approximately 10-15% when a periapical lesion is present preoperatively. REFERENCE: The Toronto Study",
+    "clinicalPearl": "The preoperative periapical status is the single most consistent prognostic factor across all major endodontic outcome studies.",
+    "reference": "The Toronto Study"
+  },
+  {
+    "question": "During a multi-visit root canal on tooth 46, you find the tooth is still symptomatic after one week of Calcium Hydroxide medicament. The canal is dry, but the patient reports pain to percussion. What is the most likely cause of persistent symptoms if the anatomy has been fully managed?",
+    "options": [
+      "Presence of extra-radicular biofilm/actinomycosis",
+      "The Calcium Hydroxide has reached its shelf life",
+      "Over-extension of the medicament into the PDL",
+      "Infection by exclusively Gram-negative aerobes"
+    ],
+    "correctAnswer": 0,
+    "category": "Pharmacology & Intracanal Medicaments",
+    "tier": 2,
+    "explanation": "CORRECT: Extra-radicular infections (e.g., Actinomyces israelii) are not reached by intracanal medicaments and often cause persistent symptoms despite high-quality RCT. INCORRECT: B - Ca(OH)2 shelf life doesn't cause symptoms; C - While Ca(OH)2 can cause irritation if extruded, it is usually self-limiting and less likely than persistent infection; D - Endodontic infections are predominantly anaerobic. CLINICAL PEARL: If a tooth remains symptomatic despite thorough cleaning and medicament, suspect a vertical root fracture or an extra-radicular infection. REFERENCE: Ricucci & Siqueira, Biofilms in Endodontics",
+    "clinicalPearl": "Extra-radicular actinomycosis is a classic reason for 'non-healing' lesions that require surgical intervention to resolve.",
+    "reference": "Ricucci & Siqueira, Biofilms in Endodontics"
+  },
+  {
+    "question": "Which of the following describes the most common location of the 'Danger Zone' in mandibular molars where a strip perforation is most likely to occur during instrumentation?",
+    "options": [
+      "The mesial aspect of the mesial root",
+      "The distal aspect of the mesial root",
+      "The buccal aspect of the distal root",
+      "The lingual aspect of the distal root"
+    ],
+    "correctAnswer": 1,
+    "category": "Root Canal Morphology & Complex Anatomy",
+    "tier": 2,
+    "explanation": "CORRECT: The 'Danger Zone' is the distal aspect (furcal side) of the mesial root in mandibular molars, where the dentin is thinnest. INCORRECT: A - The mesial aspect is the 'Safety Zone' with thicker dentin; C and D - The distal root is generally thicker and less prone to strip perforations than the mesial root. CLINICAL PEARL: Use 'anti-curvature filing' by directing your files and drills toward the mesial (away from the furcation) to avoid thinning this area. REFERENCE: Abou-Rass et al., The Anti-curvature Filing Method",
+    "clinicalPearl": "The 'Danger Zone' dentin can be as thin as 0.8mm; over-enlarging with Gates-Glidden drills is the primary cause of strip perforations here.",
+    "reference": "Abou-Rass et al., The Anti-curvature Filing Method"
+  },
+  {
+    "question": "A 25-year-old patient presents with a horizontal root fracture in the middle third of tooth 11, caused by a fall 24 hours ago. The coronal segment is Grade 2 mobile and slightly extruded. The pulp tests vital in the coronal segment. What is the most appropriate management according to IADT 2020 guidelines?",
+    "options": [
+      "Extract the coronal segment and perform RCT on the apical",
+      "Reposition the coronal segment and splint for 4 weeks",
+      "Perform immediate root canal treatment through the fracture",
+      "Reposition the coronal segment and splint for 4 months"
+    ],
+    "correctAnswer": 1,
+    "category": "Trauma Management (IADT 2020 guidelines)",
+    "tier": 2,
+    "explanation": "CORRECT: For horizontal root fractures, the treatment is repositioning the coronal segment and applying a flexible splint for 4 weeks (up to 4 months if the fracture is near the cervical area). INCORRECT: A - Apical segments almost always remain vital and should not be treated; C - RCT should only be done if the coronal segment becomes necrotic; D - 4 months is excessive for a middle-third fracture. CLINICAL PEARL: Horizontal root fractures have a high success rate; healing can occur by calcified tissue, connective tissue, or bone. REFERENCE: IADT 2020 Guidelines",
+    "clinicalPearl": "The apical segment of a root-fractured tooth remains vital in 99% of cases; never initiate RCT on the apical fragment.",
+    "reference": "IADT 2020 Guidelines"
   }
 ]
